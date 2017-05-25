@@ -2,23 +2,20 @@ package com.epam.training;
 
 public class Book {
 
-	private String authorName;
-
-	private String authorDescription;
+	private Author author;
 
 	private int yearOfPublication;
 
 	private String title;
 
 	private String description;
-	
+
 	public Book() {
 		super();
 	}
 
-	public void setAuthor(String name, String description) {
-		this.authorName = name;
-		this.authorDescription = description;
+	public void setAuthor(Author author) {
+		this.author = author;
 	}
 
 	public int getYearOfPublication() {
@@ -45,20 +42,10 @@ public class Book {
 		this.description = description;
 	}
 
-	public String getAuthorName() {
-		return authorName;
-	}
-
-	public String getAuthorDescription() {
-		return authorDescription;
-	}
-
 	@Override
 	public String toString() {
-		return "Book [authorName=" + authorName + ", authorDescription="
-				+ authorDescription + ", yearOfPublication="
-				+ yearOfPublication + ", title=" + title + ", description="
-				+ description + "]";
+		return "Book [" + author.toString() + ", yearOfPublication=" + yearOfPublication +
+			", title=" + title + ", description=" + description + "]";
 	}
 
 }

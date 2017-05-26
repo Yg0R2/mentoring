@@ -15,12 +15,5 @@ public interface Cache<T> {
 
 	// Check cache usage
 	public Iterable<String> getKeys();
-	
-	public Date getLastAccess(String key);
-
-	public long getNumHits(String key);
-
-	// It would be great to implement this
-	public void callThisMethodToWinTheLottery();
 
 }

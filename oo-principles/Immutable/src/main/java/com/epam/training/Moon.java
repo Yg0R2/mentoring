@@ -1,8 +1,11 @@
 package com.epam.training;
 
-
 public class Moon {
 
-	public Integer size;
-	
+	private final Integer size;
+
+	public Moon(Integer size) {
+		this.size = size;
+	}
+
 }

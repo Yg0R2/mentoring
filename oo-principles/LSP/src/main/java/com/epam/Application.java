@@ -21,11 +21,10 @@ public class Application {
 		boolean first = true;
 		double lastSideB = 0D;
 		for (Rectangle rectangle : rectangles) {
-			double sideB = rectangle.getSideB();
 			if (!first) {
-				rectangle.setSize(lastSideB, sideB);
+				rectangle.setSize(lastSideB, rectangle.getSideB());
 			}
-			lastSideB = sideB;
+			lastSideB = rectangle.getSideB();
 			first = false;
 		}
 	}

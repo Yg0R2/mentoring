@@ -1,5 +1,6 @@
 package com.epam.training.controller;
 
+import com.epam.training.controller.helper.ControllerHelper;
 import com.epam.training.payment.Payment;
 import com.epam.training.payment.PaymentResponseErrorHandler;
 import com.epam.training.exception.ResponseException;
@@ -9,6 +10,7 @@ import com.epam.training.payment.method.payfriend.PayFriend;
 import com.epam.training.ConfigKeys;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
@@ -37,7 +39,15 @@ public class PayFriendPaymentController {
     }
 
     @PostMapping(value = ConfigKeys.PAYFRIEND_API_PAY_URL)
-    public String paySubmit(@ModelAttribute("payFriendRequest") PayFriendRequest payFriendRequest) {
+    public String paySubmit(@ModelAttribute("payFriendRequest") PayFriendRequest payFriendRequest, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            String bindingErrors = ControllerHelper.getBindingErrorsAsString(bindingResult);
+
+            LOGGER.error(bindingErrors);
+
+            return bindingErrors;
+        }
+
         PayFriendResponse response;
         try {
             response = getTestPayFriendResponse(payFriendRequest);

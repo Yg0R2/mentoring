@@ -8,12 +8,15 @@ import com.epam.training.ConfigKeys;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import static com.epam.training.controller.helper.ControllerHelper.getBindingErrorsAsString;
 
 @RestController
 public class CreditCardPaymentController {
@@ -37,6 +40,14 @@ public class CreditCardPaymentController {
 
     @PostMapping(value = ConfigKeys.CREDIT_CARD_API_PAY_URL)
     public String paySubmit(@ModelAttribute("paymentRequest") PaymentRequest paymentRequest, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            String bindingErrors = ControllerHelper.getBindingErrorsAsString(bindingResult);
+
+            LOGGER.error(bindingErrors);
+
+            return bindingErrors;
+        }
+
         PaymentResponse response;
         try {
             response = getTestPaymentResponse(paymentRequest);

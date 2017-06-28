@@ -7,6 +7,7 @@ import com.epam.training.user.UserRequest;
 import com.epam.training.user.UserResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -38,7 +39,15 @@ public class PayFriendUserController {
     }
 
     @PostMapping(value = ConfigKeys.PAYFRIEND_API_GET_USER_URL)
-    public String getUser(@ModelAttribute("userRequest") UserRequest userRequest) {
+    public String getUser(@ModelAttribute("userRequest") UserRequest userRequest, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            String bindingErrors = ControllerHelper.getBindingErrorsAsString(bindingResult);
+
+            LOGGER.error(bindingErrors);
+
+            return bindingErrors;
+        }
+
         UserResponse response;
         try {
             response = getTestUserResponse(userRequest);

@@ -7,4 +7,7 @@ Hello World!
     <li>
         <a href="${payFriendPayURL}">${payFriendPayLabel}</a>
     </li>
+    <li>
+        <a href="${getUserURL}">${getUserLabel}</a>
+    </li>
 </ul>

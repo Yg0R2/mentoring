@@ -22,6 +22,9 @@ public class HelloWorldController {
         map.put("payFriendPayURL", ConfigKeys.PAYFRIEND_API_PAY_URL);
         map.put("payFriendPayLabel", "Pay with PayFriend");
 
+        map.put("getUserURL", ConfigKeys.PAYFRIEND_API_GET_USER_URL);
+        map.put("getUserLabel", "PayFriend getUser");
+
         return new ModelAndView("index", map);
     }
 }

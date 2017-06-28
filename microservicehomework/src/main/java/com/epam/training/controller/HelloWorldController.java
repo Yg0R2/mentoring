@@ -19,6 +19,9 @@ public class HelloWorldController {
         map.put("creditCardPayURL", ConfigKeys.CREDIT_CARD_API_PAY_URL);
         map.put("creditCardPayLabel", "Pay with Credit Card");
 
+        map.put("payFriendPayURL", ConfigKeys.PAYFRIEND_API_PAY_URL);
+        map.put("payFriendPayLabel", "Pay with PayFriend");
+
         return new ModelAndView("index", map);
     }
 }

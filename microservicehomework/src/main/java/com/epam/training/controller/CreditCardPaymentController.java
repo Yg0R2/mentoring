@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -82,7 +83,7 @@ public class CreditCardPaymentController {
         Customer customer = new Customer();
 
         customer.setAddress("CustomerAddress");
-        customer.setDateOfBirth(new Integer[] {1980, 05, 15});
+        customer.setDateOfBirth("1980-05-15");
         customer.setEmailAddress("Customer@email.com");
         customer.setFirstName("CustomerFirstName");
         customer.setLastName("CustomerLastName");

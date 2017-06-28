@@ -6,7 +6,7 @@
     </div>
     <div class="field">
         <label>Date of birth:</label>
-        <input name="customer.dateOfBirth" type="text" value="${request.customer.getDateOfBirthValue()}">
+        <input name="customer.dateOfBirth" type="text" value="${request.customer.dateOfBirth}">
     </div>
     <div class="field">
         <label>Email address:</label>

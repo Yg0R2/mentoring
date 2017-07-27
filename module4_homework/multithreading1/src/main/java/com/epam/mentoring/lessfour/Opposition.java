@@ -1,78 +1,43 @@
 package com.epam.mentoring.lessfour;
 
-import java.util.Random;
-
 public class Opposition {
-    public class Counter {
-        private int count = 10;
 
-        public void increment() {
-            count++;
-        }
-        public void decrement() {
-            count--;
-        }
-        public int get() {
-            return count;
-        }
+    private Thread thread1;
+    private Thread thread2;
+
+    public Opposition(Runnable runnable1, Runnable runnable2) {
+        thread1 =  new Thread(runnable1);
+        thread2 =  new Thread(runnable2);
     }
 
-    public class Wrestler implements Runnable {
-        private Counter counter;
-        private boolean increment;
-        private Random rand;
+    public void start() {
+        startThreads();
 
-        public Wrestler(Counter counter, boolean increment) {
-            this.counter = counter;
-            this.increment = increment;
-            rand = new Random();
-        }
-        //@Override
-        public void run() {
-            while (true) {
-                if (increment) {
-                    counter.increment();
-                } else {
-                    counter.decrement();
-                }
-
-                int x = counter.get();
-                if (x < 0) {
-                    t1.interrupt();
-                    t2.interrupt();
-                    throw new IllegalStateException("We have below zero!");
-                }
-
-                System.out.println("Wrestler" + Thread.currentThread().getName() + " " + x);
-                try {
-                    Thread.sleep(rand.nextInt(100));
-                } catch (InterruptedException e) {
-                    break;
-                }
-            }
-        }
-
-    }
-
-    private Thread t1, t2;
-    public static void main(String[] args) {
-        new Opposition().start();
-    }
-    private void start() {
-        Counter counter = new Counter();
-        t1 = new Thread(new Wrestler(counter, true));
-        t2 = new Thread(new Wrestler(counter, false));
-        t1.start();
-        t2.start();
-        try {
-            while (true) {
+        while (true) {
+            try {
                 Thread.sleep(100);
-                if (!(t1.isAlive() && t2.isAlive())) {
-                    break;
-                }
             }
-        } catch (InterruptedException e) {
+            catch (InterruptedException e) {
+            }
+
+            if (!thread1.isAlive() || !thread2.isAlive()) {
+                stopThreads();
+
+                break;
+            }
         }
+
         System.out.println("Finished");
     }
+
+    private void startThreads() {
+        thread1.start();
+        thread2.start();
+    }
+
+    private void stopThreads() {
+        thread1.interrupt();
+        thread2.interrupt();
+    }
+
 }

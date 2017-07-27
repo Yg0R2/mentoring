@@ -2,12 +2,12 @@ package com.epam.mentoring.lessfour;
 
 public class Opposition {
 
-    private Thread thread1;
-    private Thread thread2;
+    private Thread wrestler1Thread;
+    private Thread wrestler2Thread;
 
-    public Opposition(Runnable runnable1, Runnable runnable2) {
-        thread1 =  new Thread(runnable1);
-        thread2 =  new Thread(runnable2);
+    public Opposition(Thread thread1, Thread thread2) {
+        this.wrestler1Thread =  thread1;
+        this.wrestler2Thread =  thread2;
     }
 
     public void start() {
@@ -18,9 +18,10 @@ public class Opposition {
                 Thread.sleep(100);
             }
             catch (InterruptedException e) {
+                break;
             }
 
-            if (!thread1.isAlive() || !thread2.isAlive()) {
+            if (!isThreadsAllive()) {
                 stopThreads();
 
                 break;
@@ -30,14 +31,18 @@ public class Opposition {
         System.out.println("Finished");
     }
 
+    private boolean isThreadsAllive() {
+        return !(!wrestler1Thread.isAlive() || !wrestler2Thread.isAlive());
+    }
+
     private void startThreads() {
-        thread1.start();
-        thread2.start();
+        wrestler1Thread.start();
+        wrestler2Thread.start();
     }
 
     private void stopThreads() {
-        thread1.interrupt();
-        thread2.interrupt();
+        wrestler1Thread.interrupt();
+        wrestler2Thread.interrupt();
     }
 
 }

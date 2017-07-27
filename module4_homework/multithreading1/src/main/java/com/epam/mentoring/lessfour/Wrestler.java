@@ -16,9 +16,9 @@ public class Wrestler implements Runnable {
     @Override
     public void run() {
         while (true) {
-            doRun();
-
             try {
+                doRun();
+
                 Thread.sleep(rand.nextInt(100));
             }
             catch (InterruptedException e) {
@@ -27,12 +27,20 @@ public class Wrestler implements Runnable {
         }
     }
 
-    private void doRun() {
-        if (increment) {
-            counter.increment();
-        }
-        else {
-            counter.decrement();
+    private void doRun() throws InterruptedException {
+        synchronized (counter) {
+            if (increment) {
+                counter.increment();
+
+                counter.notifyAll();
+            }
+            else {
+                if (counter.get() < 1) {
+                    counter.wait();
+                }
+
+                counter.decrement();
+            }
         }
 
         int counterCurrentValue = counter.get();

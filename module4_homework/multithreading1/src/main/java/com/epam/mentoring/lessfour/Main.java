@@ -5,12 +5,11 @@ public class Main {
     public static void main(String[] args) {
         Counter counter = new Counter();
 
-        Runnable runnable1 = new Wrestler(counter, true);
-        Runnable runnable2 = new Wrestler(counter, false);
+        Thread thread1 = new Thread(new Wrestler(counter, true));
+        Thread thread2 = new Thread(new Wrestler(counter, false));
 
-        Opposition instance = new Opposition(runnable1, runnable2);
-
-        instance.start();
+        Opposition opposition = new Opposition(thread1, thread2);
+        opposition.start();
     }
 
 }

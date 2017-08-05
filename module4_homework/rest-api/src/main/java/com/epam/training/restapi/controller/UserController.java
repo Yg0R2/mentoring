@@ -23,16 +23,25 @@ public class UserController {
     @Autowired
     private UserRepository repository;
 
-    @PutMapping(path = "")
-    @Transactional
+    @PutMapping(path = "", produces = "application/user.api.v1+json")
     public String createUser(@RequestParam String firstName, @RequestParam String lastName) {
+        String emailAddress = firstName + "_" + lastName + "@epam.com";
+
+        return createUser(firstName, lastName, emailAddress);
+    }
+
+    @PutMapping(path = "", produces = "application/user.api.v2+json")
+    @Transactional
+    public String createUser(
+        @RequestParam String firstName, @RequestParam String lastName, @RequestParam String emailAddress) {
+
         User user = repository.findByFirstNameAndLastName(firstName, lastName);
 
         if (user != null) {
             throw new DuplicateUserException();
         }
 
-        user = new User(firstName, lastName);
+        user = new User(firstName, lastName, emailAddress);
         user = repository.save(user);
 
         return gson.toJson(user);

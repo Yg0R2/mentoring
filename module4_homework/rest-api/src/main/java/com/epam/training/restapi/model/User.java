@@ -1,5 +1,7 @@
 package com.epam.training.restapi.model;
 
+import org.hibernate.validator.constraints.Email;
+
 import javax.persistence.*;
 
 @Entity
@@ -13,13 +15,25 @@ public class User {
     private String firstName;
     @Column(nullable = false)
     private String lastName;
+    @Email
+    @Column(nullable = false)
+    private String emailAddress;
 
     public User() {
     }
 
-    public User(String firstName, String lastName) {
+    public User(String firstName, String lastName, String emailAddress) {
         this.firstName = firstName;
         this.lastName = lastName;
+        this.emailAddress = emailAddress;
+    }
+
+    public String getEmailAddress() {
+        return emailAddress;
+    }
+
+    public void setEmailAddress(String emailAddress) {
+        this.emailAddress = emailAddress;
     }
 
     public String getFirstName() {
@@ -48,7 +62,18 @@ public class User {
 
     @Override
     public String toString() {
-        return "User[id=" + id + ", firstName='" + firstName + "', lastName='" + lastName + "']";
+        StringBuilder sb = new StringBuilder(9);
+        sb.append("User[id=");
+        sb.append(id);
+        sb.append(", firstName='");
+        sb.append(firstName);
+        sb.append("', lastName='");
+        sb.append(lastName);
+        sb.append("', email='");
+        sb.append(emailAddress);
+        sb.append("']");
+
+        return sb.toString();
     }
 
 }

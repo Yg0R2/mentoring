@@ -7,14 +7,19 @@ public class Key {
         this.id = id;
     }
 
-    public Integer getId() {
+    public int getId() {
         return id;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return id == ((Key) obj).getId();
     }
 
     // In this basic example we only have one field, so hash can simply derived from that single field
     @Override
     public int hashCode() {
-        return id.hashCode();
+        return id;
     }
 
 }

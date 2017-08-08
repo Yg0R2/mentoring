@@ -5,6 +5,7 @@ import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.WeakHashMap;
 
 //
 // Source: https://dzone.com/articles/java-8-permgen-metaspace
@@ -29,7 +30,7 @@ import java.util.Map;
  */
 public class ClassMetadataLeakSimulator {
 
-    private static Map<String, ClassA> classLeakingMap = new HashMap<String, ClassA>();
+    private static Map<String, ClassA> classLeakingMap = new WeakHashMap<>();
     private final static int NB_ITERATIONS_DEFAULT = 50000;
 
     /**

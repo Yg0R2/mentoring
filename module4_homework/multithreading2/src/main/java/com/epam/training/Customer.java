@@ -1,17 +1,18 @@
 package com.epam.training;
 
 import java.util.Random;
+import java.util.concurrent.BlockingQueue;
 
 public abstract class Customer extends Thread {
 
-    private final SharedResource sharedResource;
+    private final BlockingQueue blockingQueue;
 
     private static Random RND = new Random();
 
-    public Customer(SharedResource sharedResource, String threadName) {
+    public Customer(BlockingQueue blockingQueue, String threadName) {
         super(threadName);
 
-        this.sharedResource = sharedResource;
+        this.blockingQueue = blockingQueue;
     }
 
     @Override
@@ -20,7 +21,11 @@ public abstract class Customer extends Thread {
             try {
                 Thread.sleep(RND.nextInt(100));
 
-                doRun();
+                if (evaluateCondition(blockingQueue)) {
+                    executeOperation(blockingQueue);
+
+                    System.out.println(getName() + " - Current size: " + blockingQueue.size());
+                }
             }
             catch (InterruptedException e) {
                 break;
@@ -28,26 +33,8 @@ public abstract class Customer extends Thread {
         }
     }
 
-    protected abstract boolean evaluateCondition(final SharedResource sharedResource);
+    protected abstract boolean evaluateCondition(final BlockingQueue blockingQueue);
 
-    protected abstract int executeOperation(final SharedResource sharedResource);
-
-    private void doRun() throws InterruptedException {
-        synchronized (sharedResource) {
-            if (evaluateCondition(sharedResource)) {
-                sharedResource.wait();
-            }
-
-            int value = executeOperation(sharedResource);
-
-            System.out.println(getName() + " - New value: " + value);
-
-            if (value < 0) {
-                throw new IllegalStateException("We have below zero!");
-            }
-
-            sharedResource.notifyAll();
-        }
-    }
+    protected abstract void executeOperation(final BlockingQueue blockingQueue) throws InterruptedException;
 
 }

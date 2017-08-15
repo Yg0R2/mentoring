@@ -1,23 +1,35 @@
 package com.epam.training;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
+
 public class Main {
 
     public static void main(String[] args) {
-        SharedResource sharedResource = new SharedResource(10);
+        BlockingQueue blockingQueue = new LinkedBlockingQueue();
 
-        Thread consumer = new Thread(new Consumer(sharedResource));
-        Thread producer = new Thread(new Producer(sharedResource));
+        Thread consumer = new Thread(new Consumer(blockingQueue));
+        Thread producer = new Thread(new Producer(blockingQueue));
 
-        consumer.start();
-        producer.start();
+        Main instance = new Main();
 
-        while (consumer.isAlive() && producer.isAlive()) {
+        instance.execute(Arrays.asList(producer, consumer));
+    }
+
+    private void execute(List<Thread> threads) {
+        threads.stream().forEach(Thread::start);
+
+        while (true) {
+            if (threads.stream().anyMatch(thread -> !thread.isAlive())) {
+                break;
+            }
         }
 
         System.out.println("Finished.");
 
-        consumer.interrupt();
-        producer.interrupt();
+        threads.stream().forEach(Thread::interrupt);
     }
 
 }

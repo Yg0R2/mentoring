@@ -1,19 +1,21 @@
 package com.epam.training;
 
+import java.util.concurrent.BlockingQueue;
+
 public class Producer extends Customer {
 
-    public Producer(SharedResource sharedResource) {
-        super(sharedResource, "producer");
+    public Producer(BlockingQueue blockingQueue) {
+        super(blockingQueue, "producer");
     }
 
     @Override
-    protected boolean evaluateCondition(final SharedResource sharedResource) {
-        return sharedResource.get() >= 10;
+    protected boolean evaluateCondition(final BlockingQueue blockingQueue) {
+        return blockingQueue.size() < 10;
     }
 
     @Override
-    protected int executeOperation(final SharedResource sharedResource) {
-        return sharedResource.increment();
+    protected void executeOperation(final BlockingQueue blockingQueue) throws InterruptedException {
+        blockingQueue.put(1);
     }
 
 }

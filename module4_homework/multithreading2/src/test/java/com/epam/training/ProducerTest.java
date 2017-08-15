@@ -3,22 +3,27 @@ package com.epam.training;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import java.lang.reflect.Array;
+import java.util.Arrays;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
+
 import static org.testng.Assert.assertEquals;
 
 public class ProducerTest {
 
     Producer producer;
-    private SharedResource sharedResource;
+    private BlockingQueue blockingQueue;
 
     @BeforeMethod
     public void beforeMethod() {
-        sharedResource = new SharedResource(5);
+        blockingQueue = new LinkedBlockingQueue(Arrays.asList(1, 2, 3, 4, 5));
     }
 
     @Test
     public void testOnlyOneProducer() {
         // GIVEN
-        producer = new Producer(sharedResource);
+        producer = new Producer(blockingQueue);
 
         // WHEN
         producer.start();
@@ -26,7 +31,7 @@ public class ProducerTest {
         TestUtils.waitAndInterruptThreads(2000, producer);
 
         // THEN
-        assertEquals(sharedResource.get(), 10);
+        assertEquals(blockingQueue.size(), 10);
     }
 
 }

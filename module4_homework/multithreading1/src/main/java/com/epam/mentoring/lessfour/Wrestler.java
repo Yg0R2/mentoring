@@ -3,14 +3,15 @@ package com.epam.mentoring.lessfour;
 import java.util.Random;
 
 public class Wrestler implements Runnable {
-    private Counter counter;
+
+    private final Counter counter;
     private boolean increment;
-    private Random rand;
+
+    private static final Random RND = new Random();
 
     public Wrestler(Counter counter, boolean increment) {
         this.counter = counter;
         this.increment = increment;
-        rand = new Random();
     }
 
     @Override
@@ -19,7 +20,7 @@ public class Wrestler implements Runnable {
             try {
                 doRun();
 
-                Thread.sleep(rand.nextInt(100));
+                Thread.sleep(RND.nextInt(100));
             }
             catch (InterruptedException e) {
                 break;
@@ -28,27 +29,20 @@ public class Wrestler implements Runnable {
     }
 
     private void doRun() throws InterruptedException {
-        synchronized (counter) {
-            if (increment) {
-                counter.increment();
+        int counterCurrentValue;
 
-                counter.notifyAll();
-            }
-            else {
-                if (counter.get() < 1) {
-                    counter.wait();
-                }
-
-                counter.decrement();
-            }
+        if (increment) {
+            counterCurrentValue = counter.increment();
         }
-
-        int counterCurrentValue = counter.get();
-        if (counterCurrentValue < 0) {
-            throw new IllegalStateException("We have below zero!");
+        else {
+            counterCurrentValue = counter.decrement();
         }
 
         System.out.println("Wrestler" + Thread.currentThread().getName() + " " + counterCurrentValue);
+
+        if (counterCurrentValue < 0) {
+            throw new IllegalStateException("We have below zero!");
+        }
     }
 
 }

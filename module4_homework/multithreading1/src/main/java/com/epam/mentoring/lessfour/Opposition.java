@@ -1,48 +1,42 @@
 package com.epam.mentoring.lessfour;
 
+import java.util.List;
+
 public class Opposition {
 
-    private Thread wrestler1Thread;
-    private Thread wrestler2Thread;
+    private List<Thread> wrestlers;
 
-    public Opposition(Thread thread1, Thread thread2) {
-        this.wrestler1Thread =  thread1;
-        this.wrestler2Thread =  thread2;
+    public Opposition(List<Thread> wrestlers) {
+        this.wrestlers = wrestlers;
     }
 
     public void start() {
         startThreads();
 
-        while (true) {
+        while (isAllThreadsAlive()) {
             try {
                 Thread.sleep(100);
             }
             catch (InterruptedException e) {
                 break;
             }
-
-            if (!isThreadsAllive()) {
-                stopThreads();
-
-                break;
-            }
         }
+
+        stopThreads();
 
         System.out.println("Finished");
     }
 
-    private boolean isThreadsAllive() {
-        return !(!wrestler1Thread.isAlive() || !wrestler2Thread.isAlive());
+    private boolean isAllThreadsAlive() {
+        return !(wrestlers.stream().anyMatch(thread -> !thread.isAlive()));
     }
 
     private void startThreads() {
-        wrestler1Thread.start();
-        wrestler2Thread.start();
+        wrestlers.stream().forEach(Thread::start);
     }
 
     private void stopThreads() {
-        wrestler1Thread.interrupt();
-        wrestler2Thread.interrupt();
+        wrestlers.stream().forEach(Thread::interrupt);
     }
 
 }

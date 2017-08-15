@@ -1,14 +1,16 @@
 package com.epam.mentoring.lessfour;
 
+import java.util.Arrays;
+
 public class Main {
 
     public static void main(String[] args) {
         Counter counter = new Counter();
 
-        Thread thread1 = new Thread(new Wrestler(counter, true));
-        Thread thread2 = new Thread(new Wrestler(counter, false));
+        Thread incrementThread = new Thread(new Wrestler(counter, true));
+        Thread decrementThread = new Thread(new Wrestler(counter, false));
 
-        Opposition opposition = new Opposition(thread1, thread2);
+        Opposition opposition = new Opposition(Arrays.asList(incrementThread, decrementThread));
         opposition.start();
     }
 

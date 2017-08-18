@@ -5,11 +5,11 @@ import java.util.concurrent.BlockingQueue;
 
 public abstract class Customer extends Thread {
 
-    private final BlockingQueue blockingQueue;
+    private final BlockingQueue<Object> blockingQueue;
 
     private static Random RND = new Random();
 
-    public Customer(BlockingQueue blockingQueue, String threadName) {
+    public Customer(BlockingQueue<Object> blockingQueue, String threadName) {
         super(threadName);
 
         this.blockingQueue = blockingQueue;
@@ -33,8 +33,8 @@ public abstract class Customer extends Thread {
         }
     }
 
-    protected abstract boolean evaluateCondition(final BlockingQueue blockingQueue);
+    protected abstract boolean evaluateCondition(final BlockingQueue<Object> blockingQueue);
 
-    protected abstract void executeOperation(final BlockingQueue blockingQueue) throws InterruptedException;
+    protected abstract void executeOperation(final BlockingQueue<Object> blockingQueue) throws InterruptedException;
 
 }

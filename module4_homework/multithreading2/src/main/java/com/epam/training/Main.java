@@ -8,7 +8,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 public class Main {
 
     public static void main(String[] args) {
-        BlockingQueue blockingQueue = new LinkedBlockingQueue();
+        BlockingQueue<Object> blockingQueue = new LinkedBlockingQueue<>();
 
         Thread consumer = new Thread(new Consumer(blockingQueue));
         Thread producer = new Thread(new Producer(blockingQueue));

@@ -20,7 +20,7 @@ public class Counter {
         try {
             currentValue = count.incrementAndGet();
 
-            condition.signal();
+            condition.signalAll();
         }
         finally {
             lock.unlock();
@@ -29,12 +29,12 @@ public class Counter {
         return currentValue;
     }
 
-    public synchronized int decrement() throws InterruptedException {
+    public int decrement() throws InterruptedException {
         int currentValue;
 
         lock.lock();
 
-        if (count.get() == 0) {
+        while (count.get() == 0) {
             condition.await();
         }
 

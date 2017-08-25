@@ -3,12 +3,10 @@ package com.epam.mentoring.sequence;
 import org.powermock.core.classloader.annotations.PrepareEverythingForTest;
 import org.powermock.core.classloader.annotations.SuppressStaticInitializationFor;
 import org.powermock.reflect.Whitebox;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import static org.testng.Assert.assertEquals;
 
-//@RunWith(PowerMockRunner.class)
 @PrepareEverythingForTest
 @SuppressStaticInitializationFor("LongestSequence")
 public class LongestSequenceTest {
@@ -24,11 +22,13 @@ public class LongestSequenceTest {
         // WHEN
 
         underTest = new LongestSequence(array, 17);
-        int result = underTest.compute();
+        Result result = underTest.compute();
 
         // THEN
 
-        assertEquals(result, 0);
+        assertEquals(result.getFromIndex(), 0);
+        assertEquals(result.getToIndex(), 0);
+        assertEquals(result.getLength(), 0);
     }
 
     @Test
@@ -40,11 +40,13 @@ public class LongestSequenceTest {
         // WHEN
 
         underTest = new LongestSequence(array, 17);
-        int result = underTest.compute();
+        Result result = underTest.compute();
 
         // THEN
 
-        assertEquals(result, 0);
+        assertEquals(result.getFromIndex(), 0);
+        assertEquals(result.getToIndex(), 0);
+        assertEquals(result.getLength(), 0);
     }
 
     @Test
@@ -56,11 +58,13 @@ public class LongestSequenceTest {
         // WHEN
 
         underTest = new LongestSequence(array, 17);
-        int result = underTest.compute();
+        Result result = underTest.compute();
 
         // THEN
 
-        assertEquals(result, 5);
+        assertEquals(result.getFromIndex(), 0);
+        assertEquals(result.getToIndex(), array.length -1);
+        assertEquals(result.getLength(), 5);
     }
 
     @Test
@@ -72,11 +76,13 @@ public class LongestSequenceTest {
         // WHEN
 
         underTest = new LongestSequence(array, 17);
-        int result = underTest.compute();
+        Result result = underTest.compute();
 
         // THEN
 
-        assertEquals(result, 3);
+        assertEquals(result.getFromIndex(), 6);
+        assertEquals(result.getToIndex(), 8);
+        assertEquals(result.getLength(), 3);
     }
 
     @Test
@@ -95,11 +101,11 @@ public class LongestSequenceTest {
         // WHEN
 
         underTest = new LongestSequence(array, 17);
-        int result = underTest.compute();
+        Result result = underTest.compute();
 
         // THEN
 
-        assertEquals(result, 7);
+        assertEquals(result.getLength(), 7);
     }
 
 }

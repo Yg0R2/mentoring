@@ -2,6 +2,7 @@ package com.epam.mentoring;
 
 import com.epam.mentoring.max.FindMax;
 import com.epam.mentoring.sequence.LongestSequence;
+import com.epam.mentoring.sequence.Result;
 import com.epam.mentoring.util.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,7 +44,7 @@ public class Main {
         }
 
         LongestSequence longestSequence = new LongestSequence(array, 17);
-        int longestSequenceCount = longestSequence.invoke();
+        Result longestSequenceCount = longestSequence.invoke();
 
         LOGGER.info("Longest sequence of '17': " + longestSequenceCount);
     }

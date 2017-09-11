@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <title>GlassFish WebSocket Chat Application</title>
+    <link rel="stylesheet" href="css/main.css" />
+</head>
+<body>
+    <noscript>
+        <h2>Sorry! Your browser doesn't support Javascript</h2>
+    </noscript>
+
+    <div id="userNamePage">
+        <h1 class="title">Type your username</h1>
+        <div class="userNamePageContainer">
+            <h1 class="title">Type your username</h1>
+            <form id="userNameForm" name="userNameForm">
+                <div class="formGroup">
+                    <input type="text" id="name" placeholder="User name" autocomplete="off" class="formControl" />
+                </div>
+                <div class="formGroup">
+                    <button type="submit" class="accent userNameSubmit">Start Chatting</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="chatPage" class="hidden">
+        <div class="chatContainer">
+            <div class="chatHeader">
+                <h2>GlassFish WebSocket Chat Application</h2>
+            </div>
+
+            <div class="connecting">
+                Connecting...
+            </div>
+            <div class="error hidden">
+                Could not connect to WebSocket server. Please refresh this page to try again!
+            </div>
+
+            <ul id="messageArea"></ul>
+
+            <form id="messageForm" name="messageForm" nameForm="messageForm">
+                <div class="formGroup">
+                    <div class="inputGroup clearfix">
+                        <input type="text" id="message" placeholder="Type a message..." autocomplete="off" class="formControl"/>
+                        <button type="submit" class="primary">Send</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="js/main.js"></script>
+    <script type="text/javascript" src="js/chat.js"></script>
+</body>
+</html>

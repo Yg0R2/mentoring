@@ -1,0 +1,7 @@
+dependencies {
+    compile project(':dao')
+
+    compile('com.fasterxml.jackson.core:jackson-annotations')
+
+    compile('org.apache.commons:commons-collections4:4.1')
+}

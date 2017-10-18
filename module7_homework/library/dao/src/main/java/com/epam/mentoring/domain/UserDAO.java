@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.Pattern;
 import java.io.Serializable;
 
 @Entity
@@ -24,6 +25,10 @@ public class UserDAO implements Serializable {
 
     @Column(name = "last_name", nullable = false, length = 50)
     private String lastName;
+
+    @Column(name = "email_address", nullable = false, length = 200)
+    @Pattern(regexp = "^[A-Za-z0-9._%-+]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}$")
+    private String emailAddress;
 
     @Column(name = "user_role", nullable = false)
     @Enumerated(EnumType.STRING)
@@ -59,6 +64,14 @@ public class UserDAO implements Serializable {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public String getEmailAddress() {
+        return emailAddress;
+    }
+
+    public void setEmailAddress(String emailAddress) {
+        this.emailAddress = emailAddress;
     }
 
     public UserRole getUserRole() {

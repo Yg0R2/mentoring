@@ -7,6 +7,7 @@ public class UserRequest {
     private long id;
     private String firstName;
     private String lastName;
+    private String emailAddress;
     private UserRole userRole;
 
     public UserRequest() {
@@ -34,6 +35,14 @@ public class UserRequest {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public String getEmailAddress() {
+        return emailAddress;
+    }
+
+    public void setEmailAddress(String emailAddress) {
+        this.emailAddress = emailAddress;
     }
 
     public UserRole getUserRole() {

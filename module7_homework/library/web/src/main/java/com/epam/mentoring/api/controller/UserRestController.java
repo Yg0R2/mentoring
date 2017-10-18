@@ -86,6 +86,7 @@ public class UserRestController {
         UserDAO user = new UserDAO(userRequest.getFirstName(), userRequest.getLastName());
 
         user.setId(userRequest.getId());
+        user.setEmailAddress(userRequest.getEmailAddress());
         user.setUserRole(userRequest.getUserRole());
 
         return user;

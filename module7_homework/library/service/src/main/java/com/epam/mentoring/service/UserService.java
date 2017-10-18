@@ -48,6 +48,10 @@ public class UserService {
             storedUser.setLastName(user.getLastName());
         }
 
+        if (Objects.nonNull(user.getEmailAddress())) {
+            storedUser.setEmailAddress(user.getEmailAddress());
+        }
+
         if (Objects.nonNull(user.getUserRole())) {
             storedUser.setUserRole(user.getUserRole());
         }

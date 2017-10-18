@@ -20,6 +20,7 @@ public class ApplicationMain {
     public CommandLineRunner demo() {
         return (args) -> {
             dataPopulator.populateBooksAndAuthors();
+            dataPopulator.populateUsers();
         };
     }
 

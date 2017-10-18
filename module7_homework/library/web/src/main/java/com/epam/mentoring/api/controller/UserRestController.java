@@ -2,13 +2,12 @@ package com.epam.mentoring.api.controller;
 
 import com.epam.mentoring.api.exception.MissingRequestParameterException;
 import com.epam.mentoring.api.exception.NoSuchEntryException;
+import com.epam.mentoring.api.utils.ModelMapperUtils;
 import com.epam.mentoring.domain.UserDAO;
 import com.epam.mentoring.service.UserService;
 import com.epam.mentoring.api.request.UserRequest;
 import com.epam.mentoring.api.response.UserResponse;
 import com.google.gson.Gson;
-import org.modelmapper.ModelMapper;
-import org.modelmapper.TypeToken;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,14 +16,12 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.lang.reflect.Type;
 import java.util.List;
 
 @RestController
 @RequestMapping(path = "/api")
 public class UserRestController {
 
-    private static final Type USER_RESPONSE_LIST_TYPE = new TypeToken<List<UserResponse>>() {}.getType();
     private static final Logger LOGGER = LoggerFactory.getLogger(UserRestController.class);
 
     @Autowired
@@ -32,7 +29,7 @@ public class UserRestController {
     @Autowired
     private Gson gson;
     @Autowired
-    private ModelMapper modelMapper;
+    private ModelMapperUtils modelMapperUtils;
 
     @PostMapping(path = "/user", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(value = HttpStatus.OK)
@@ -81,23 +78,11 @@ public class UserRestController {
     }
 
     private UserResponse mapToResponse(UserDAO user) {
-        UserResponse userResponse = modelMapper.map(user, UserResponse.class);
-
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("UserResponse: {}", gson.toJson(userResponse));
-        }
-
-        return userResponse;
+        return modelMapperUtils.map(user, ModelMapperUtils.USER_RESPONSE_TYPE);
     }
 
     private List<UserResponse> mapToResponse(List<UserDAO> users) {
-        List<UserResponse> userResponses = modelMapper.map(users, USER_RESPONSE_LIST_TYPE);
-
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("List<UserResponse>: {}", gson.toJson(userResponses));
-        }
-
-        return userResponses;
+        return modelMapperUtils.map(users, ModelMapperUtils.USER_RESPONSE_LIST_TYPE);
     }
 
 }

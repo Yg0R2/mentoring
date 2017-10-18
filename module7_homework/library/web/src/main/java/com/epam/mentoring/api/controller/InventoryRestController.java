@@ -2,15 +2,12 @@ package com.epam.mentoring.api.controller;
 
 import com.epam.mentoring.api.exception.MissingRequestParameterException;
 import com.epam.mentoring.api.exception.NoSuchEntryException;
-import com.epam.mentoring.api.request.InventoryRequest;
 import com.epam.mentoring.api.response.InventoryResponse;
-import com.epam.mentoring.domain.BookDAO;
-import com.epam.mentoring.domain.UserDAO;
+import com.epam.mentoring.api.utils.ModelMapperUtils;
 import com.epam.mentoring.domain.InventoryDAO;
 import com.epam.mentoring.service.InventoryService;
+import com.epam.mentoring.api.request.InventoryRequest;
 import com.google.gson.Gson;
-import org.modelmapper.ModelMapper;
-import org.modelmapper.TypeToken;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,15 +16,12 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.lang.reflect.Type;
 import java.util.List;
 
 @RestController
 @RequestMapping(path = "/api")
 public class InventoryRestController {
 
-    private static final Type INVENTORY_RESPONSE_LIST_TYPE = new TypeToken<List<InventoryResponse>>() {}.getType();
-    private static final Type USER_LIST_TYPE = new TypeToken<List<UserDAO>>() {}.getType();
     private static final Logger LOGGER = LoggerFactory.getLogger(InventoryRestController.class);
 
     @Autowired
@@ -35,7 +29,7 @@ public class InventoryRestController {
     @Autowired
     private Gson gson;
     @Autowired
-    private ModelMapper modelMapper;
+    private ModelMapperUtils modelMapperUtils;
 
     @PostMapping(path = "/inventory", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(value = HttpStatus.OK)
@@ -46,10 +40,10 @@ public class InventoryRestController {
 
         InventoryDAO inventory = new InventoryDAO();
 
-        inventory.setBook(modelMapper.map(inventoryRequest.getBook(), BookDAO.class));
-        inventory.setRequestedForBorrow(modelMapper.map(inventoryRequest.getRequestedForBorrow(), USER_LIST_TYPE));
+        inventory.setBook(modelMapperUtils.map(inventoryRequest.getBook(), ModelMapperUtils.BOOK_TYPE));
+        inventory.setRequestedForBorrow(modelMapperUtils.map(inventoryRequest.getRequestedForBorrow(), ModelMapperUtils.USER_LIST_TYPE));
         inventory.setReturnDate(inventoryRequest.getReturnDate());
-        inventory.setUserBorrowed(modelMapper.map(inventoryRequest.getUserBorrowed(), UserDAO.class));
+        inventory.setUserBorrowed(modelMapperUtils.map(inventoryRequest.getUserBorrowed(), ModelMapperUtils.USER_TYPE));
 
         return mapToResponse(inventoryService.createInventory(inventory));
     }
@@ -77,7 +71,7 @@ public class InventoryRestController {
 
     @GetMapping(path = "/inventories")
     @ResponseStatus(value = HttpStatus.OK)
-    public List<InventoryResponse> getInventories() {
+    public List<InventoryResponse> getLibraries() {
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("Get all inventories.");
         }
@@ -86,23 +80,11 @@ public class InventoryRestController {
     }
 
     private InventoryResponse mapToResponse(InventoryDAO inventory) {
-        InventoryResponse inventoryResponse = modelMapper.map(inventory, InventoryResponse.class);
-
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("InventoryResponse: {}", gson.toJson(inventoryResponse));
-        }
-
-        return inventoryResponse;
+        return modelMapperUtils.map(inventory, InventoryResponse.class);
     }
 
-    private List<InventoryResponse> mapToResponse(List<InventoryDAO> inventory) {
-        List<InventoryResponse> inventoryResponses = modelMapper.map(inventory, INVENTORY_RESPONSE_LIST_TYPE);
-
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("InventoryResponse: {}", gson.toJson(inventoryResponses));
-        }
-
-        return inventoryResponses;
+    private List<InventoryResponse> mapToResponse(List<InventoryDAO> inventories) {
+        return modelMapperUtils.map(inventories, ModelMapperUtils.INVENTORY_RESPONSE_LIST_TYPE);
     }
 
 }

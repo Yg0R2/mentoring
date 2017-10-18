@@ -10,7 +10,13 @@ import org.springframework.context.annotation.Bean;
 public class ApplicationMain {
 
     @Autowired
-    private DummyDataPopulator dataPopulator;
+    private DummyAuthorDataPopulator dummyAuthorDataPopulator;
+    @Autowired
+    private DummyBookDataPopulator dummyBookDataPopulator;
+    @Autowired
+    private DummyInventoryDataPopulator dummyInventoryDataPopulator;
+    @Autowired
+    private DummyUserDataPopulator dummyUserDataPopulator;
 
     public static void main(String[] args) {
         SpringApplication.run(ApplicationMain.class, args);
@@ -19,8 +25,10 @@ public class ApplicationMain {
     @Bean
     public CommandLineRunner demo() {
         return (args) -> {
-            dataPopulator.populateBooksAndAuthors();
-            dataPopulator.populateUsers();
+            dummyAuthorDataPopulator.populateAuthors();
+            dummyBookDataPopulator.populateBooks();
+            dummyUserDataPopulator.populateUsers();
+            dummyInventoryDataPopulator.populateInventories();
         };
     }
 

@@ -4,11 +4,10 @@ import com.epam.mentoring.api.exception.MissingRequestParameterException;
 import com.epam.mentoring.api.exception.NoSuchEntryException;
 import com.epam.mentoring.api.request.AuthorRequest;
 import com.epam.mentoring.api.response.AuthorResponse;
+import com.epam.mentoring.api.utils.ModelMapperUtils;
 import com.epam.mentoring.domain.AuthorDAO;
 import com.epam.mentoring.service.AuthorService;
 import com.google.gson.Gson;
-import org.modelmapper.ModelMapper;
-import org.modelmapper.TypeToken;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,14 +22,12 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
-import java.lang.reflect.Type;
 import java.util.List;
 
 @RestController
 @RequestMapping(path = "/api")
 public class AuthorRestController {
 
-    private static final Type AUTHOR_RESPONSE_LIST_TYPE = new TypeToken<List<AuthorResponse>>() {}.getType();
     private static final Logger LOGGER = LoggerFactory.getLogger(AuthorRestController.class);
 
     @Autowired
@@ -38,7 +35,7 @@ public class AuthorRestController {
     @Autowired
     private Gson gson;
     @Autowired
-    private ModelMapper modelMapper;
+    private ModelMapperUtils modelMapperUtils;
 
     @PostMapping(path = "/author", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(value = HttpStatus.OK)
@@ -84,23 +81,11 @@ public class AuthorRestController {
     }
 
     private AuthorResponse mapToResponse(AuthorDAO author) {
-        AuthorResponse authorResponse = modelMapper.map(author, AuthorResponse.class);
-
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("AuthorResponse: {}", gson.toJson(authorResponse));
-        }
-
-        return authorResponse;
+        return modelMapperUtils.map(author, ModelMapperUtils.AUTHOR_RESPONSE_TYPE);
     }
 
     private List<AuthorResponse> mapToResponse(List<AuthorDAO> authors) {
-        List<AuthorResponse> authorResponses = modelMapper.map(authors, AUTHOR_RESPONSE_LIST_TYPE);
-
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("List<AuthorResponse>: {}", gson.toJson(authorResponses));
-        }
-
-        return authorResponses;
+        return modelMapperUtils.map(authors, ModelMapperUtils.AUTHOR_RESPONSE_LIST_TYPE);
     }
 
 }

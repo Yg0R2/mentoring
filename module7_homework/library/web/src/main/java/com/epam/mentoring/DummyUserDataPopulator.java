@@ -1,8 +1,9 @@
 package com.epam.mentoring;
 
+import com.epam.mentoring.api.controller.UserRestController;
+import com.epam.mentoring.api.request.UserRequest;
 import com.epam.mentoring.domain.UserDAO;
 import com.epam.mentoring.domain.UserRole;
-import com.epam.mentoring.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -10,7 +11,7 @@ import org.springframework.stereotype.Component;
 public class DummyUserDataPopulator {
 
     @Autowired
-    private UserService userService;
+    private UserRestController userRestController;
 
     public void populateUsers() {
         createUser("User", "A", UserRole.USER);
@@ -19,11 +20,13 @@ public class DummyUserDataPopulator {
     }
 
     private void createUser(String firstName, String lastName, UserRole userRole) {
-        UserDAO user = new UserDAO(firstName, lastName);
+        UserRequest userRequest = new UserRequest();
 
-        user.setUserRole(userRole);
+        userRequest.setFirstName(firstName);
+        userRequest.setLastName(lastName);
+        userRequest.setUserRole(userRole);
 
-        userService.createUser(user);
+        userRestController.createUser(userRequest);
     }
 
 }

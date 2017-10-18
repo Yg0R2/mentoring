@@ -1,9 +1,10 @@
 package com.epam.mentoring;
 
-import com.epam.mentoring.domain.AuthorDAO;
-import com.epam.mentoring.domain.BookDAO;
-import com.epam.mentoring.service.AuthorService;
-import com.epam.mentoring.service.BookService;
+import com.epam.mentoring.api.controller.AuthorRestController;
+import com.epam.mentoring.api.controller.BookRestController;
+import com.epam.mentoring.api.request.BookRequest;
+import com.epam.mentoring.api.response.AuthorResponse;
+import com.epam.mentoring.api.utils.ModelMapperUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -14,26 +15,29 @@ import java.util.List;
 public class DummyBookDataPopulator {
 
     @Autowired
-    private AuthorService authorService;
+    private AuthorRestController authorRestController;
     @Autowired
-    private BookService bookService;
+    private BookRestController bookRestController;
+    @Autowired
+    private ModelMapperUtils modelMapperUtils;
 
     public void populateBooks() {
-        AuthorDAO authorA = authorService.getAuthorById(1);
-        AuthorDAO authorB = authorService.getAuthorById(2);
-        AuthorDAO authorC = authorService.getAuthorById(3);
+        AuthorResponse authorA = authorRestController.getAuthor(1);
+        AuthorResponse authorB = authorRestController.getAuthor(2);
+        AuthorResponse authorC = authorRestController.getAuthor(3);
 
         createBook("Book A", Arrays.asList(authorA, authorB));
         createBook("Book B", Arrays.asList(authorA, authorC));
         createBook("Book C", Arrays.asList(authorB));
     }
 
-    private void createBook(String title, List<AuthorDAO> authors) {
-        BookDAO book = new BookDAO(title);
+    private void createBook(String title, List<AuthorResponse> authors) {
+        BookRequest bookRequest = new BookRequest();
 
-        book.setAuthors(authors);
+        bookRequest.setTitle(title);
+        bookRequest.setAuthors(modelMapperUtils.map(authors, ModelMapperUtils.AUTHOR_REQUEST_LIST_TYPE));
 
-        bookService.createBook(book);
+        bookRestController.createBook(bookRequest);
     }
 
 

@@ -1,11 +1,12 @@
 package com.epam.mentoring;
 
-import com.epam.mentoring.domain.BookDAO;
-import com.epam.mentoring.domain.InventoryDAO;
-import com.epam.mentoring.domain.UserDAO;
-import com.epam.mentoring.service.BookService;
-import com.epam.mentoring.service.InventoryService;
-import com.epam.mentoring.service.UserService;
+import com.epam.mentoring.api.controller.BookRestController;
+import com.epam.mentoring.api.controller.InventoryRestController;
+import com.epam.mentoring.api.controller.UserRestController;
+import com.epam.mentoring.api.request.InventoryRequest;
+import com.epam.mentoring.api.response.BookResponse;
+import com.epam.mentoring.api.response.UserResponse;
+import com.epam.mentoring.api.utils.ModelMapperUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -18,27 +19,29 @@ import java.util.Date;
 public class DummyInventoryDataPopulator {
 
     @Autowired
-    private BookService bookService;
+    private BookRestController bookRestController;
     @Autowired
-    private InventoryService inventoryService;
+    private InventoryRestController inventoryRestController;
     @Autowired
-    private UserService userService;
+    private UserRestController userRestController;
+    @Autowired
+    private ModelMapperUtils modelMapperUtils;
 
     public void populateInventories() {
-        BookDAO bookA = bookService.getBookById(1);
-        UserDAO userB = userService.getUserById(2);
+        BookResponse bookA = bookRestController.getBook(1);
+        UserResponse userB = userRestController.getUser(2);
 
         createInventoryItem(bookA, userB);
     }
 
-    private void createInventoryItem(BookDAO book, UserDAO user) {
-        InventoryDAO inventory = new InventoryDAO();
+    private void createInventoryItem(BookResponse bookResponse, UserResponse userRequest) {
+        InventoryRequest inventoryRequest = new InventoryRequest();
 
-        inventory.setBook(book);
-        inventory.setUserBorrowed(user);
-        inventory.setReturnDate(Date.from(LocalDate.now().plus(1, ChronoUnit.MONTHS).atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()));
+        inventoryRequest.setBook(modelMapperUtils.map(bookResponse, ModelMapperUtils.BOOK_REQUEST_TYPE));
+        inventoryRequest.setUserBorrowed(modelMapperUtils.map(userRequest, ModelMapperUtils.USER_REQUEST_TYPE));
+        inventoryRequest.setReturnDate(Date.from(LocalDate.now().plus(1, ChronoUnit.MONTHS).atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()));
 
-        inventoryService.createInventory(inventory);
+        inventoryRestController.createInventory(inventoryRequest);
     }
 
 }

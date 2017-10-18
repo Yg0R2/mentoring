@@ -1,5 +1,7 @@
 package com.epam.mentoring;
 
+import com.epam.mentoring.api.controller.AuthorRestController;
+import com.epam.mentoring.api.request.AuthorRequest;
 import com.epam.mentoring.domain.AuthorDAO;
 import com.epam.mentoring.service.AuthorService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +11,7 @@ import org.springframework.stereotype.Component;
 public class DummyAuthorDataPopulator {
 
     @Autowired
-    private AuthorService authorService;
+    private AuthorRestController authorRestController;
 
     public void populateAuthors() {
         createAuthor("Author", "A");
@@ -18,9 +20,12 @@ public class DummyAuthorDataPopulator {
     }
 
     private void createAuthor(String firstName, String lastName) {
-        AuthorDAO author = new AuthorDAO(firstName, lastName);
+        AuthorRequest authorRequest = new AuthorRequest();
 
-        authorService.createAuthor(author);
+        authorRequest.setFirstName(firstName);
+        authorRequest.setLastName(lastName);
+
+        authorRestController.createAuthor(authorRequest);
     }
 
 

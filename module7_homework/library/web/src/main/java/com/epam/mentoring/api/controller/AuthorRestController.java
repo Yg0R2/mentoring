@@ -1,7 +1,6 @@
 package com.epam.mentoring.api.controller;
 
 import com.epam.mentoring.api.exception.MissingRequestParameterException;
-import com.epam.mentoring.api.exception.NoSuchEntryException;
 import com.epam.mentoring.api.request.AuthorRequest;
 import com.epam.mentoring.api.response.AuthorResponse;
 import com.epam.mentoring.api.utils.ModelMapperUtils;
@@ -13,13 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -40,11 +33,7 @@ public class AuthorRestController {
     @PostMapping(path = "/author", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(value = HttpStatus.OK)
     public AuthorResponse createAuthor(@RequestBody @Valid AuthorRequest authorRequest) {
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("AuthorRequest: {}", gson.toJson(authorRequest));
-        }
-
-        AuthorDAO author = new AuthorDAO(authorRequest.getFirstName(), authorRequest.getLastName());
+        AuthorDAO author = getAuthorFromRequest(authorRequest);
 
         return mapToResponse(authorService.createAuthor(author));
     }
@@ -62,22 +51,37 @@ public class AuthorRestController {
             LOGGER.debug("Get author by Id: {}", id);
         }
 
-        AuthorDAO author = authorService.getAuthorById(id);
-
-        if (author == null) {
-            throw new NoSuchEntryException("Author doesn't exist with the requested id=" + id);
-        }
-
-        return mapToResponse(author);
+        return mapToResponse(authorService.getAuthorById(id));
     }
 
     @GetMapping(path = "/authors")
+    @ResponseStatus(value = HttpStatus.OK)
     public List<AuthorResponse> getAuthors() {
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("Get all authors.");
         }
 
         return mapToResponse(authorService.getAuthors());
+    }
+
+    @PutMapping(path = "/author", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(value = HttpStatus.OK)
+    public AuthorResponse updateAuthor(@RequestBody @Valid AuthorRequest authorRequest) {
+        AuthorDAO author = getAuthorFromRequest(authorRequest);
+
+        return mapToResponse(authorService.updateAuthor(author));
+    }
+
+    private AuthorDAO getAuthorFromRequest(AuthorRequest authorRequest) {
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("AuthorRequest: {}", gson.toJson(authorRequest));
+        }
+
+        AuthorDAO author = new AuthorDAO(authorRequest.getFirstName(), authorRequest.getLastName());
+
+        author.setId(authorRequest.getId());
+
+        return author;
     }
 
     private AuthorResponse mapToResponse(AuthorDAO author) {

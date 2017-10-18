@@ -1,7 +1,6 @@
 package com.epam.mentoring.api.controller;
 
 import com.epam.mentoring.api.exception.MissingRequestParameterException;
-import com.epam.mentoring.api.exception.NoSuchEntryException;
 import com.epam.mentoring.api.utils.ModelMapperUtils;
 import com.epam.mentoring.domain.UserDAO;
 import com.epam.mentoring.service.UserService;
@@ -34,13 +33,7 @@ public class UserRestController {
     @PostMapping(path = "/user", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(value = HttpStatus.OK)
     public UserResponse createUser(@RequestBody @Valid UserRequest userRequest) {
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("UserRequest: {}", gson.toJson(userRequest));
-        }
-
-        UserDAO user = new UserDAO(userRequest.getFirstName(), userRequest.getLastName());
-
-        user.setUserRole(userRequest.getUserRole());
+        UserDAO user = getUserFromRequest(userRequest);
 
         return mapToResponse(userService.createUser(user));
     }
@@ -58,13 +51,7 @@ public class UserRestController {
             LOGGER.debug("Get user by Id: {}", id);
         }
 
-        UserDAO user = userService.getUserById(id);
-
-        if (user == null) {
-            throw new NoSuchEntryException("User doesn't exist with the requested id=" + id);
-        }
-
-        return mapToResponse(user);
+        return mapToResponse(userService.getUserById(id));
     }
 
     @GetMapping(path = "/users")
@@ -75,6 +62,27 @@ public class UserRestController {
         }
 
         return mapToResponse(userService.getUsers());
+    }
+
+    @PutMapping(path = "/user", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(value = HttpStatus.OK)
+    public UserResponse updateUser(@RequestBody @Valid UserRequest userRequest) {
+        UserDAO user = getUserFromRequest(userRequest);
+
+        return mapToResponse(userService.updateUser(user));
+    }
+
+    private UserDAO getUserFromRequest(UserRequest userRequest) {
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("UserRequest: {}", gson.toJson(userRequest));
+        }
+
+        UserDAO user = new UserDAO(userRequest.getFirstName(), userRequest.getLastName());
+
+        user.setId(userRequest.getId());
+        user.setUserRole(userRequest.getUserRole());
+
+        return user;
     }
 
     private UserResponse mapToResponse(UserDAO user) {

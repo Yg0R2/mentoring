@@ -21,7 +21,7 @@ import java.util.List;
 @Table(name = "books")
 public class BookDAO implements Serializable {
 
-    @Column(name = "id")
+    @Column(name = "id", nullable = false, updatable = false)
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE)
     private long id;

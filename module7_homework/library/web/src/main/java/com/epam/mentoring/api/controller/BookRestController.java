@@ -1,7 +1,6 @@
 package com.epam.mentoring.api.controller;
 
 import com.epam.mentoring.api.exception.MissingRequestParameterException;
-import com.epam.mentoring.api.exception.NoSuchEntryException;
 import com.epam.mentoring.api.request.BookRequest;
 import com.epam.mentoring.api.utils.ModelMapperUtils;
 import com.epam.mentoring.domain.BookDAO;
@@ -13,13 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -40,13 +33,7 @@ public class BookRestController {
     @PostMapping(path = "/book", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(value = HttpStatus.OK)
     public BookResponse createBook(@RequestBody @Valid BookRequest bookRequest) {
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("BookRequest: {}", gson.toJson(bookRequest));
-        }
-
-        BookDAO book = new BookDAO(bookRequest.getTitle());
-
-        book.setAuthors(modelMapperUtils.map(bookRequest.getAuthors(), ModelMapperUtils.AUTHOR_LIST_TYPE));
+        BookDAO book = getBookFromRequest(bookRequest);
 
         return mapToResponse(bookService.createBook(book));
     }
@@ -64,22 +51,38 @@ public class BookRestController {
             LOGGER.debug("Get book by Id: {}", id);
         }
 
-        BookDAO book = bookService.getBookById(id);
-
-        if (book == null) {
-            throw new NoSuchEntryException("Book doesn't exist with the requested id=" + id);
-        }
-
-        return mapToResponse(book);
+        return mapToResponse(bookService.getBookById(id));
     }
 
     @GetMapping(path = "/books")
+    @ResponseStatus(value = HttpStatus.OK)
     public List<BookResponse> getBooks() {
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("Get all books.");
         }
 
         return mapToResponse(bookService.getBooks());
+    }
+
+    @PutMapping(path = "/book", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(value = HttpStatus.OK)
+    public BookResponse updateBook(@RequestBody @Valid BookRequest bookRequest) {
+        BookDAO book = getBookFromRequest(bookRequest);
+
+        return mapToResponse(bookService.updateBook(book));
+    }
+
+    private BookDAO getBookFromRequest(BookRequest bookRequest) {
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("BookRequest: {}", gson.toJson(bookRequest));
+        }
+
+        BookDAO book = new BookDAO(bookRequest.getTitle());
+
+        book.setId(bookRequest.getId());
+        book.setAuthors(modelMapperUtils.map(bookRequest.getAuthors(), ModelMapperUtils.AUTHOR_LIST_TYPE));
+
+        return book;
     }
 
     private BookResponse mapToResponse(BookDAO book) {

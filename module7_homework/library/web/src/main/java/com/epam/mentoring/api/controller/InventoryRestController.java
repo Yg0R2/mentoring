@@ -1,7 +1,6 @@
 package com.epam.mentoring.api.controller;
 
 import com.epam.mentoring.api.exception.MissingRequestParameterException;
-import com.epam.mentoring.api.exception.NoSuchEntryException;
 import com.epam.mentoring.api.response.InventoryResponse;
 import com.epam.mentoring.api.utils.ModelMapperUtils;
 import com.epam.mentoring.domain.InventoryDAO;
@@ -34,16 +33,7 @@ public class InventoryRestController {
     @PostMapping(path = "/inventory", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(value = HttpStatus.OK)
     public InventoryResponse createInventory(@RequestBody @Valid InventoryRequest inventoryRequest) {
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("InventoryRequest: {}", gson.toJson(inventoryRequest));
-        }
-
-        InventoryDAO inventory = new InventoryDAO();
-
-        inventory.setBook(modelMapperUtils.map(inventoryRequest.getBook(), ModelMapperUtils.BOOK_TYPE));
-        inventory.setRequestedForBorrow(modelMapperUtils.map(inventoryRequest.getRequestedForBorrow(), ModelMapperUtils.USER_LIST_TYPE));
-        inventory.setReturnDate(inventoryRequest.getReturnDate());
-        inventory.setUserBorrowed(modelMapperUtils.map(inventoryRequest.getUserBorrowed(), ModelMapperUtils.USER_TYPE));
+        InventoryDAO inventory = getInventoryFromRequest(inventoryRequest);
 
         return mapToResponse(inventoryService.createInventory(inventory));
     }
@@ -60,13 +50,7 @@ public class InventoryRestController {
             LOGGER.debug("Get inventory by Id: {}", id);
         }
 
-        InventoryDAO inventory =inventoryService.getInventoryById(id);
-
-        if (inventory == null) {
-            throw new NoSuchEntryException("Inventory doesn't exist with the requested id=" + id);
-        }
-
-        return  mapToResponse(inventory);
+        return  mapToResponse(inventoryService.getInventoryById(id));
     }
 
     @GetMapping(path = "/inventories")
@@ -77,6 +61,30 @@ public class InventoryRestController {
         }
 
         return mapToResponse(inventoryService.getInventories());
+    }
+
+    @PutMapping(path = "/inventory", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(value = HttpStatus.OK)
+    public InventoryResponse updateInventory(@RequestBody @Valid InventoryRequest inventoryRequest) {
+        InventoryDAO inventory = getInventoryFromRequest(inventoryRequest);
+
+        return mapToResponse(inventoryService.updateInventory(inventory));
+    }
+
+    private InventoryDAO getInventoryFromRequest(InventoryRequest inventoryRequest) {
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("InventoryRequest: {}", gson.toJson(inventoryRequest));
+        }
+
+        InventoryDAO inventory = new InventoryDAO();
+
+        inventory.setId(inventoryRequest.getId());
+        inventory.setBook(modelMapperUtils.map(inventoryRequest.getBook(), ModelMapperUtils.BOOK_TYPE));
+        inventory.setRequestedForBorrow(modelMapperUtils.map(inventoryRequest.getRequestedForBorrow(), ModelMapperUtils.USER_LIST_TYPE));
+        inventory.setReturnDate(inventoryRequest.getReturnDate());
+        inventory.setUserBorrowed(modelMapperUtils.map(inventoryRequest.getUserBorrowed(), ModelMapperUtils.USER_TYPE));
+
+        return inventory;
     }
 
     private InventoryResponse mapToResponse(InventoryDAO inventory) {

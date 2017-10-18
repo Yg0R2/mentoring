@@ -9,7 +9,7 @@ import java.util.Set;
 @Table(name = "inventories")
 public class InventoryDAO {
 
-    @Column(name = "id", nullable = false)
+    @Column(name = "id", nullable = false, updatable = false)
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE)
     private long id;

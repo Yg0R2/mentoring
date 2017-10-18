@@ -14,7 +14,7 @@ import java.io.Serializable;
 @Table(name = "users")
 public class UserDAO implements Serializable {
 
-    @Column(name = "id")
+    @Column(name = "id", nullable = false, updatable = false)
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE)
     private long id;

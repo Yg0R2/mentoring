@@ -25,7 +25,7 @@ import java.util.List;
 @Table(name = "authors")
 public class AuthorDAO implements Serializable {
 
-    @Column(name = "id")
+    @Column(name = "id", nullable = false, updatable = false)
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE)
     private long id;

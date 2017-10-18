@@ -4,6 +4,7 @@ import com.epam.mentoring.domain.BookDAO;
 import com.epam.mentoring.repository.BookRepository;
 import com.epam.mentoring.service.exception.NoSuchEntryException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
@@ -49,6 +50,16 @@ public class BookService {
         }
 
         return storedBook;
+    }
+
+    @Transactional
+    public void deleteBook(long id) {
+        try {
+            bookRepository.delete(id);
+        }
+        catch (EmptyResultDataAccessException e) {
+            throw new NoSuchEntryException("Book doesn't exist with the requested id=" + id);
+        }
     }
 
 }

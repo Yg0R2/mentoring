@@ -30,7 +30,7 @@ public class BookDAO implements Serializable {
     private String title;
 
     @JsonBackReference
-    @ManyToMany(cascade = CascadeType.MERGE, targetEntity = AuthorDAO.class)
+    @ManyToMany(cascade = CascadeType.MERGE)
     @JoinTable(
         name = "authors_books",
         joinColumns = @JoinColumn(name = "book_id", referencedColumnName = "id"),

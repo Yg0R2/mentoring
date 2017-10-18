@@ -1,24 +1,16 @@
 package com.epam.mentoring.domain;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import javax.validation.constraints.Past;
 import java.io.Serializable;
-import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -42,12 +34,7 @@ public class AuthorDAO implements Serializable {
     private Date birthDate;*/
 
     @JsonBackReference
-    @ManyToMany(cascade = CascadeType.MERGE, targetEntity = BookDAO.class)
-    @JoinTable(
-        name = "authors_books",
-        joinColumns = @JoinColumn(name = "author_id", referencedColumnName = "id"),
-        inverseJoinColumns = @JoinColumn(name = "book_id", referencedColumnName = "id")
-    )
+    @ManyToMany(cascade = CascadeType.MERGE, mappedBy = "authors")
     private List<BookDAO> books;
 
     private AuthorDAO() {

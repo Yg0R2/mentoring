@@ -4,6 +4,7 @@ import com.epam.mentoring.domain.UserDAO;
 import com.epam.mentoring.repository.UserRepository;
 import com.epam.mentoring.service.exception.NoSuchEntryException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -53,4 +54,15 @@ public class UserService {
 
         return storedUser;
     }
+
+    @Transactional
+    public void deleteUser(long id) {
+        try {
+            userRepository.delete(id);
+        }
+        catch (EmptyResultDataAccessException e) {
+            throw new NoSuchEntryException("User doesn't exist with the requested id=" + id);
+        }
+    }
+
 }

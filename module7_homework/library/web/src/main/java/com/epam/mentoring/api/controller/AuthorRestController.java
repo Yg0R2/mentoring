@@ -38,6 +38,12 @@ public class AuthorRestController {
         return mapToResponse(authorService.createAuthor(author));
     }
 
+    @DeleteMapping(path = "/author")
+    @ResponseStatus(value = HttpStatus.OK)
+    public void deleteAuthor(@RequestParam long id) {
+        authorService.deleteAuthor(id);
+    }
+
     @GetMapping(path = "/author")
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)
     public AuthorResponse getAuthor() {

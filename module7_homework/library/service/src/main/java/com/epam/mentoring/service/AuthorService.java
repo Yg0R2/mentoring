@@ -4,6 +4,7 @@ import com.epam.mentoring.domain.AuthorDAO;
 import com.epam.mentoring.repository.AuthorRepository;
 import com.epam.mentoring.service.exception.NoSuchEntryException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
@@ -53,6 +54,16 @@ public class AuthorService {
 
     public List<AuthorDAO> getAuthors() {
         return authorRepository.findAll();
+    }
+
+    @Transactional
+    public void deleteAuthor(long id) {
+        try {
+            authorRepository.delete(id);
+        }
+        catch (EmptyResultDataAccessException e) {
+            throw new NoSuchEntryException("Author doesn't exist with the requested id=" + id);
+        }
     }
 
 }

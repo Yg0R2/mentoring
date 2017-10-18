@@ -4,6 +4,7 @@ import com.epam.mentoring.domain.InventoryDAO;
 import com.epam.mentoring.repository.InventoryRepository;
 import com.epam.mentoring.service.exception.NoSuchEntryException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
@@ -57,6 +58,16 @@ public class InventoryService {
         }
 
         return storedInventory;
+    }
+
+    @Transactional
+    public void deleteInventory(long id) {
+        try {
+            inventoryRepository.delete(id);
+        }
+        catch (EmptyResultDataAccessException e) {
+            throw new NoSuchEntryException("Inventory doesn't exist with the requested id=" + id);
+        }
     }
 
 }

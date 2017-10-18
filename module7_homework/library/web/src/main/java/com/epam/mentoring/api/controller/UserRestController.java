@@ -38,6 +38,12 @@ public class UserRestController {
         return mapToResponse(userService.createUser(user));
     }
 
+    @DeleteMapping(path = "/user")
+    @ResponseStatus(value = HttpStatus.OK)
+    public void deleteUser(@RequestParam long id) {
+        userService.deleteUser(id);
+    }
+
     @GetMapping(path = "/user")
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)
     public UserResponse getUser() {

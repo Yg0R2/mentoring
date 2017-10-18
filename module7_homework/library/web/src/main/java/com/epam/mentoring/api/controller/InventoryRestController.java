@@ -38,6 +38,12 @@ public class InventoryRestController {
         return mapToResponse(inventoryService.createInventory(inventory));
     }
 
+    @DeleteMapping(path = "inventory")
+    @ResponseStatus(value = HttpStatus.OK)
+    public void deleteInventory(@RequestParam long id) {
+        inventoryService.deleteInventory(id);
+    }
+
     @GetMapping(path = "/inventory")
     public InventoryResponse getInventory() {
         throw new MissingRequestParameterException("Missing request parameter.");

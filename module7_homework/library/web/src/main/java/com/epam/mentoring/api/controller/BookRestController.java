@@ -38,6 +38,12 @@ public class BookRestController {
         return mapToResponse(bookService.createBook(book));
     }
 
+    @DeleteMapping(path = "/book")
+    @ResponseStatus(value = HttpStatus.OK)
+    public void deleteBook(@RequestParam long id) {
+        bookService.deleteBook(id);
+    }
+
     @GetMapping(path = "/book")
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)
     public BookResponse getBook() {

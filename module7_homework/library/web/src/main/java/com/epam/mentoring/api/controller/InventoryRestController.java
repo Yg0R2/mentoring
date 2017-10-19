@@ -2,11 +2,10 @@ package com.epam.mentoring.api.controller;
 
 import com.epam.mentoring.api.exception.MissingRequestParameterException;
 import com.epam.mentoring.api.response.InventoryResponse;
-import com.epam.mentoring.api.utils.ModelMapperUtils;
+import com.epam.mentoring.mapper.InventoryMapper;
 import com.epam.mentoring.domain.InventoryDAO;
 import com.epam.mentoring.service.InventoryService;
 import com.epam.mentoring.api.request.InventoryRequest;
-import com.google.gson.Gson;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,18 +23,18 @@ public class InventoryRestController {
     private static final Logger LOGGER = LoggerFactory.getLogger(InventoryRestController.class);
 
     @Autowired
+    private InventoryMapper inventoryMapper;
+    @Autowired
     private InventoryService inventoryService;
-    @Autowired
-    private Gson gson;
-    @Autowired
-    private ModelMapperUtils modelMapperUtils;
 
     @PostMapping(path = "/inventory", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(value = HttpStatus.OK)
     public InventoryResponse createInventory(@RequestBody @Valid InventoryRequest inventoryRequest) {
-        InventoryDAO inventory = getInventoryFromRequest(inventoryRequest);
+        InventoryDAO inventory = inventoryMapper.mapToDao(inventoryRequest);
 
-        return mapToResponse(inventoryService.createInventory(inventory));
+        InventoryDAO storedInventory = inventoryService.createInventory(inventory);
+
+        return inventoryMapper.mapToResponse(storedInventory);
     }
 
     @DeleteMapping(path = "inventory")
@@ -56,7 +55,9 @@ public class InventoryRestController {
             LOGGER.debug("Get inventory by Id: {}", id);
         }
 
-        return  mapToResponse(inventoryService.getInventoryById(id));
+        InventoryDAO storedInventory = inventoryService.getInventoryById(id);
+
+        return inventoryMapper.mapToResponse(storedInventory);
     }
 
     @GetMapping(path = "/inventories")
@@ -66,39 +67,19 @@ public class InventoryRestController {
             LOGGER.debug("Get all inventories.");
         }
 
-        return mapToResponse(inventoryService.getInventories());
+        List<InventoryDAO> storedInventories = inventoryService.getInventories();
+
+        return inventoryMapper.mapToResponse(storedInventories);
     }
 
     @PutMapping(path = "/inventory", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(value = HttpStatus.OK)
     public InventoryResponse updateInventory(@RequestBody @Valid InventoryRequest inventoryRequest) {
-        InventoryDAO inventory = getInventoryFromRequest(inventoryRequest);
+        InventoryDAO inventory = inventoryMapper.mapToDao(inventoryRequest);
 
-        return mapToResponse(inventoryService.updateInventory(inventory));
-    }
+        InventoryDAO storedInventory = inventoryService.updateInventory(inventory);
 
-    private InventoryDAO getInventoryFromRequest(InventoryRequest inventoryRequest) {
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("InventoryRequest: {}", gson.toJson(inventoryRequest));
-        }
-
-        InventoryDAO inventory = new InventoryDAO();
-
-        inventory.setId(inventoryRequest.getId());
-        inventory.setBook(modelMapperUtils.map(inventoryRequest.getBook(), ModelMapperUtils.BOOK_TYPE));
-        inventory.setRequestedForBorrow(modelMapperUtils.map(inventoryRequest.getRequestedForBorrow(), ModelMapperUtils.USER_LIST_TYPE));
-        inventory.setReturnDate(inventoryRequest.getReturnDate());
-        inventory.setUserBorrowed(modelMapperUtils.map(inventoryRequest.getUserBorrowed(), ModelMapperUtils.USER_TYPE));
-
-        return inventory;
-    }
-
-    private InventoryResponse mapToResponse(InventoryDAO inventory) {
-        return modelMapperUtils.map(inventory, InventoryResponse.class);
-    }
-
-    private List<InventoryResponse> mapToResponse(List<InventoryDAO> inventories) {
-        return modelMapperUtils.map(inventories, ModelMapperUtils.INVENTORY_RESPONSE_LIST_TYPE);
+        return inventoryMapper.mapToResponse(storedInventory);
     }
 
 }

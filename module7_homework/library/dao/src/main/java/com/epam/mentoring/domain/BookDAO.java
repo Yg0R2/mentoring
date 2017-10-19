@@ -19,7 +19,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "books")
-public class BookDAO implements Serializable {
+public final class BookDAO implements Serializable {
 
     @Column(name = "id", nullable = false, updatable = false)
     @Id
@@ -47,11 +47,7 @@ public class BookDAO implements Serializable {
     @Temporal(TemporalType.DATE)
     private Date publishDate;*/
 
-    private BookDAO() {
-    }
-
-    public BookDAO(String title) {
-        this.title = title;
+    public BookDAO() {
     }
 
     public long getId() {

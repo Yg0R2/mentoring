@@ -6,7 +6,8 @@ import com.epam.mentoring.api.controller.UserRestController;
 import com.epam.mentoring.api.request.InventoryRequest;
 import com.epam.mentoring.api.response.BookResponse;
 import com.epam.mentoring.api.response.UserResponse;
-import com.epam.mentoring.api.utils.ModelMapperUtils;
+import com.epam.mentoring.mapper.BookMapper;
+import com.epam.mentoring.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -25,7 +26,9 @@ public class DummyInventoryDataPopulator {
     @Autowired
     private UserRestController userRestController;
     @Autowired
-    private ModelMapperUtils modelMapperUtils;
+    private BookMapper bookMapper;
+    @Autowired
+    private UserMapper userMapper;
 
     public void populateInventories() {
         BookResponse bookA = bookRestController.getBook(1);
@@ -34,11 +37,11 @@ public class DummyInventoryDataPopulator {
         createInventoryItem(bookA, userB);
     }
 
-    private void createInventoryItem(BookResponse bookResponse, UserResponse userRequest) {
+    private void createInventoryItem(BookResponse bookResponse, UserResponse userResponse) {
         InventoryRequest inventoryRequest = new InventoryRequest();
 
-        inventoryRequest.setBook(modelMapperUtils.map(bookResponse, ModelMapperUtils.BOOK_REQUEST_TYPE));
-        inventoryRequest.setUserBorrowed(modelMapperUtils.map(userRequest, ModelMapperUtils.USER_REQUEST_TYPE));
+        inventoryRequest.setBook(bookMapper.mapToRequest(bookResponse));
+        inventoryRequest.setUserBorrowed(userMapper.mapToRequest(userResponse));
         inventoryRequest.setReturnDate(Date.from(LocalDate.now().plus(1, ChronoUnit.MONTHS).atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()));
 
         inventoryRestController.createInventory(inventoryRequest);

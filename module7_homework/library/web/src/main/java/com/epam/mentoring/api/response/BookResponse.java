@@ -1,8 +1,9 @@
 package com.epam.mentoring.api.response;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class BookResponse {
+public final class BookResponse implements Serializable {
 
     private long id;
     private String title;

@@ -1,9 +1,10 @@
 package com.epam.mentoring.api.response;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
 
-public class InventoryResponse {
+public final class InventoryResponse implements Serializable {
 
     private long id;
     private BookResponse book;

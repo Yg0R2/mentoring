@@ -1,13 +1,13 @@
 package com.epam.mentoring.domain;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Table(name = "inventories")
-public class InventoryDAO {
+public final class InventoryDAO implements Serializable {
 
     @Column(name = "id", nullable = false, updatable = false)
     @Id

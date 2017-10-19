@@ -1,8 +1,9 @@
 package com.epam.mentoring.api.request;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class BookRequest {
+public final class BookRequest implements Serializable {
 
     private long id;
     private String title;

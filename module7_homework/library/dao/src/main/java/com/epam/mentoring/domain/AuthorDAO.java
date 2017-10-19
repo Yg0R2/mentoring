@@ -15,7 +15,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "authors")
-public class AuthorDAO implements Serializable {
+public final class AuthorDAO implements Serializable {
 
     @Column(name = "id", nullable = false, updatable = false)
     @Id
@@ -37,12 +37,7 @@ public class AuthorDAO implements Serializable {
     @ManyToMany(cascade = CascadeType.MERGE, mappedBy = "authors")
     private List<BookDAO> books;
 
-    private AuthorDAO() {
-    }
-
-    public AuthorDAO(String firstName, String lastName) {
-        this.firstName = firstName;
-        this.lastName = lastName;
+    public AuthorDAO() {
     }
 
     public long getId() {

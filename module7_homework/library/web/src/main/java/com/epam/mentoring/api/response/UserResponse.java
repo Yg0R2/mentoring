@@ -2,7 +2,9 @@ package com.epam.mentoring.api.response;
 
 import com.epam.mentoring.domain.UserRole;
 
-public class UserResponse {
+import java.io.Serializable;
+
+public final class UserResponse implements Serializable {
 
     private long id;
     private String firstName;

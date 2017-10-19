@@ -1,9 +1,10 @@
 package com.epam.mentoring.api.request;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
 
-public class InventoryRequest {
+public final class InventoryRequest implements Serializable {
 
     private long id;
     private BookRequest book;

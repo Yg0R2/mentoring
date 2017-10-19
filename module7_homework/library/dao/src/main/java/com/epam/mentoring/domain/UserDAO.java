@@ -13,7 +13,7 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "users")
-public class UserDAO implements Serializable {
+public final class UserDAO implements Serializable {
 
     @Column(name = "id", nullable = false, updatable = false)
     @Id
@@ -34,12 +34,7 @@ public class UserDAO implements Serializable {
     @Enumerated(EnumType.STRING)
     private UserRole userRole;
 
-    private UserDAO() {
-    }
-
-    public UserDAO(String firstName, String lastName) {
-        this.firstName = firstName;
-        this.lastName = lastName;
+    public UserDAO() {
     }
 
     public long getId() {

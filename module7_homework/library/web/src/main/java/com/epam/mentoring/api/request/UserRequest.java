@@ -2,7 +2,9 @@ package com.epam.mentoring.api.request;
 
 import com.epam.mentoring.domain.UserRole;
 
-public class UserRequest {
+import java.io.Serializable;
+
+public final class UserRequest implements Serializable {
 
     private long id;
     private String firstName;

@@ -1,6 +1,8 @@
 package com.epam.mentoring.api.response;
 
-public class AuthorResponse {
+import java.io.Serializable;
+
+public final class AuthorResponse implements Serializable {
 
     private long id;
     private String firstName;

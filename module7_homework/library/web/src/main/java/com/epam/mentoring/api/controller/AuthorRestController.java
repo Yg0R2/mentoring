@@ -3,10 +3,9 @@ package com.epam.mentoring.api.controller;
 import com.epam.mentoring.api.exception.MissingRequestParameterException;
 import com.epam.mentoring.api.request.AuthorRequest;
 import com.epam.mentoring.api.response.AuthorResponse;
-import com.epam.mentoring.api.utils.ModelMapperUtils;
+import com.epam.mentoring.mapper.AuthorMapper;
 import com.epam.mentoring.domain.AuthorDAO;
 import com.epam.mentoring.service.AuthorService;
-import com.google.gson.Gson;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,18 +23,19 @@ public class AuthorRestController {
     private static final Logger LOGGER = LoggerFactory.getLogger(AuthorRestController.class);
 
     @Autowired
+    private AuthorMapper authorMapper;
+    @Autowired
     private AuthorService authorService;
-    @Autowired
-    private Gson gson;
-    @Autowired
-    private ModelMapperUtils modelMapperUtils;
+
 
     @PostMapping(path = "/author", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(value = HttpStatus.OK)
     public AuthorResponse createAuthor(@RequestBody @Valid AuthorRequest authorRequest) {
-        AuthorDAO author = getAuthorFromRequest(authorRequest);
+        AuthorDAO author = authorMapper.mapToDao(authorRequest);
 
-        return mapToResponse(authorService.createAuthor(author));
+        AuthorDAO storedAuthor = authorService.createAuthor(author);
+
+        return authorMapper.mapToResponse(storedAuthor);
     }
 
     @DeleteMapping(path = "/author")
@@ -57,7 +57,9 @@ public class AuthorRestController {
             LOGGER.debug("Get author by Id: {}", id);
         }
 
-        return mapToResponse(authorService.getAuthorById(id));
+        AuthorDAO storedAuthor = authorService.getAuthorById(id);
+
+        return authorMapper.mapToResponse(storedAuthor);
     }
 
     @GetMapping(path = "/authors")
@@ -67,35 +69,19 @@ public class AuthorRestController {
             LOGGER.debug("Get all authors.");
         }
 
-        return mapToResponse(authorService.getAuthors());
+        List<AuthorDAO> authors = authorService.getAuthors();
+
+        return authorMapper.mapToResponse(authors);
     }
 
     @PutMapping(path = "/author", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(value = HttpStatus.OK)
     public AuthorResponse updateAuthor(@RequestBody @Valid AuthorRequest authorRequest) {
-        AuthorDAO author = getAuthorFromRequest(authorRequest);
+        AuthorDAO author = authorMapper.mapToDao(authorRequest);
 
-        return mapToResponse(authorService.updateAuthor(author));
-    }
+        AuthorDAO storedAuthor = authorService.updateAuthor(author);
 
-    private AuthorDAO getAuthorFromRequest(AuthorRequest authorRequest) {
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("AuthorRequest: {}", gson.toJson(authorRequest));
-        }
-
-        AuthorDAO author = new AuthorDAO(authorRequest.getFirstName(), authorRequest.getLastName());
-
-        author.setId(authorRequest.getId());
-
-        return author;
-    }
-
-    private AuthorResponse mapToResponse(AuthorDAO author) {
-        return modelMapperUtils.map(author, ModelMapperUtils.AUTHOR_RESPONSE_TYPE);
-    }
-
-    private List<AuthorResponse> mapToResponse(List<AuthorDAO> authors) {
-        return modelMapperUtils.map(authors, ModelMapperUtils.AUTHOR_RESPONSE_LIST_TYPE);
+        return authorMapper.mapToResponse(storedAuthor);
     }
 
 }

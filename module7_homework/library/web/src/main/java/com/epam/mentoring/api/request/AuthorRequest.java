@@ -1,6 +1,8 @@
 package com.epam.mentoring.api.request;
 
-public class AuthorRequest {
+import java.io.Serializable;
+
+public final class AuthorRequest implements Serializable {
 
     private long id;
     private String firstName;

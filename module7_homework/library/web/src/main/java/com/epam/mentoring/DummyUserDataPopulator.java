@@ -16,7 +16,7 @@ public class DummyUserDataPopulator {
     public void populateUsers() {
         createUser("User", "A", UserRole.USER);
         createUser("User", "B", UserRole.ADMIN);
-        createUser("User", "B", UserRole.LIBRARIAN);
+        createUser("User", "C", UserRole.LIBRARIAN);
     }
 
     private void createUser(String firstName, String lastName, UserRole userRole) {
@@ -24,6 +24,7 @@ public class DummyUserDataPopulator {
 
         userRequest.setFirstName(firstName);
         userRequest.setLastName(lastName);
+        userRequest.setEmailAddress(firstName + "." + lastName + "@library.com");
         userRequest.setUserRole(userRole);
 
         userRestController.createUser(userRequest);

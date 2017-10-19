@@ -4,7 +4,7 @@ import com.epam.mentoring.api.controller.AuthorRestController;
 import com.epam.mentoring.api.controller.BookRestController;
 import com.epam.mentoring.api.request.BookRequest;
 import com.epam.mentoring.api.response.AuthorResponse;
-import com.epam.mentoring.api.utils.ModelMapperUtils;
+import com.epam.mentoring.mapper.AuthorMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -19,7 +19,7 @@ public class DummyBookDataPopulator {
     @Autowired
     private BookRestController bookRestController;
     @Autowired
-    private ModelMapperUtils modelMapperUtils;
+    private AuthorMapper authorMapper;
 
     public void populateBooks() {
         AuthorResponse authorA = authorRestController.getAuthor(1);
@@ -31,11 +31,11 @@ public class DummyBookDataPopulator {
         createBook("Book C", Arrays.asList(authorB));
     }
 
-    private void createBook(String title, List<AuthorResponse> authors) {
+    private void createBook(String title, List<AuthorResponse> authorResponses) {
         BookRequest bookRequest = new BookRequest();
 
         bookRequest.setTitle(title);
-        bookRequest.setAuthors(modelMapperUtils.map(authors, ModelMapperUtils.AUTHOR_REQUEST_LIST_TYPE));
+        bookRequest.setAuthors(authorMapper.mapToRequest(authorResponses));
 
         bookRestController.createBook(bookRequest);
     }

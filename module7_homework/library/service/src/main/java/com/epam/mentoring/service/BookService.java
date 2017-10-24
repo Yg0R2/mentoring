@@ -43,6 +43,16 @@ public class BookService {
         return book;
     }
 
+    public BookDAO getBookByTitle(String title) {
+        BookDAO book = bookRepository.findByTitle(title);
+
+        if (book == null) {
+            throw new NoSuchEntryException("Book doesn't exist with the requested title=" + title);
+        }
+
+        return book;
+    }
+
     public List<BookDAO> getBooks() {
         return bookRepository.findAll();
     }

@@ -65,6 +65,15 @@ public class BookController {
         return new ModelAndView(BOOK_VIEW, modelMap);
     }
 
+    @PostMapping(path = "/book", params = "title")
+    public ModelAndView getBook(@RequestParam String title) {
+        ModelMap modelMap = new ModelMap();
+
+        modelMap.put("book", bookRestController.getBook(title));
+
+        return new ModelAndView(BOOK_VIEW, modelMap);
+    }
+
     @GetMapping(path = "/books")
     public ModelAndView getBooks() {
         ModelMap modelMap = new ModelMap();

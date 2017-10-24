@@ -61,6 +61,18 @@ public class BookRestController {
         return bookMapper.mapToResponse(storedBook);
     }
 
+    @GetMapping(path = "/book", params = {"title"})
+    @ResponseStatus(value = HttpStatus.OK)
+    public BookResponse getBook(@RequestParam String title) {
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("Get book by Title: {}", title);
+        }
+
+        BookDAO storedBook = bookService.getBookByTitle(title);
+
+        return bookMapper.mapToResponse(storedBook);
+    }
+
     @GetMapping(path = "/books")
     @ResponseStatus(value = HttpStatus.OK)
     public List<BookResponse> getBooks() {

@@ -21,7 +21,11 @@ public final class InventoryDAO implements Serializable {
     @Column(name = "available_copies_number", nullable = false)
     private int availableCopiesNumber;
 
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinTable(
+        name = "user_inventory_borrowed",
+        joinColumns = @JoinColumn(name = "user_id", nullable = false, referencedColumnName = "id"),
+        inverseJoinColumns = @JoinColumn(name = "id", nullable = false, unique = true)
+    )
     @OneToMany(targetEntity = UserDAO.class)
     private List<UserDAO> usersBorrowed;
 
@@ -29,7 +33,11 @@ public final class InventoryDAO implements Serializable {
     @Temporal(TemporalType.DATE)
     private Date returnDate;
 
-    @JoinColumn(name = "request_for_borrow")
+    @JoinTable(
+        name = "user_inventory_requested",
+        joinColumns = @JoinColumn(name = "user_id", nullable = false, referencedColumnName = "id"),
+        inverseJoinColumns = @JoinColumn(name = "id", nullable = false, unique = true)
+    )
     @OneToMany(targetEntity = UserDAO.class)
     private List<UserDAO> requestedForBorrow;
 

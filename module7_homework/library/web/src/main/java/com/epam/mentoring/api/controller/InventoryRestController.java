@@ -1,11 +1,11 @@
 package com.epam.mentoring.api.controller;
 
 import com.epam.mentoring.api.exception.MissingRequestParameterException;
-import com.epam.mentoring.api.response.InventoryResponse;
+import com.epam.mentoring.response.InventoryResponse;
 import com.epam.mentoring.mapper.InventoryMapper;
 import com.epam.mentoring.domain.InventoryDAO;
 import com.epam.mentoring.service.InventoryService;
-import com.epam.mentoring.api.request.InventoryRequest;
+import com.epam.mentoring.request.InventoryRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,17 +1,14 @@
-package com.epam.mentoring.api.request;
-
+package com.epam.mentoring.response;
 
 import java.io.Serializable;
-import java.util.Date;
-import java.util.List;
 
-public final class InventoryRequest implements Serializable {
+public final class InventoryResponse implements Serializable {
 
     private long id;
-    private BookRequest book;
+    private BookResponse book;
     private int availableCopiesNumber;
 
-    public InventoryRequest() {
+    public InventoryResponse() {
     }
 
     public long getId() {
@@ -22,11 +19,11 @@ public final class InventoryRequest implements Serializable {
         this.id = id;
     }
 
-    public BookRequest getBook() {
+    public BookResponse getBook() {
         return book;
     }
 
-    public void setBook(BookRequest book) {
+    public void setBook(BookResponse book) {
         this.book = book;
     }
 

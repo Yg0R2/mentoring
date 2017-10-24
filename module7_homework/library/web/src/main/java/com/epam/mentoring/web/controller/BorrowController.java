@@ -3,9 +3,7 @@ package com.epam.mentoring.web.controller;
 import com.epam.mentoring.api.controller.BookRestController;
 import com.epam.mentoring.api.controller.BorrowRestController;
 import com.epam.mentoring.api.controller.UserRestController;
-import com.epam.mentoring.api.request.BorrowRequest;
-import com.epam.mentoring.api.response.BookResponse;
-import com.epam.mentoring.api.response.UserResponse;
+import com.epam.mentoring.request.BorrowRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -15,8 +13,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-
-import java.util.List;
 
 @Controller
 public class BorrowController {

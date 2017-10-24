@@ -1,8 +1,8 @@
 package com.epam.mentoring.web.converter;
 
 import com.epam.mentoring.api.controller.InventoryRestController;
-import com.epam.mentoring.api.request.InventoryRequest;
-import com.epam.mentoring.api.response.InventoryResponse;
+import com.epam.mentoring.request.InventoryRequest;
+import com.epam.mentoring.response.InventoryResponse;
 import com.epam.mentoring.mapper.InventoryMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

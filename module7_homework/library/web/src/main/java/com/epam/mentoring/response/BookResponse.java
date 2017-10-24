@@ -1,16 +1,16 @@
-package com.epam.mentoring.api.request;
+package com.epam.mentoring.response;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import java.io.Serializable;
 import java.util.List;
 
-public final class BookRequest implements Serializable {
+public final class BookResponse implements Serializable {
 
     private long id;
     private String title;
     @JsonManagedReference
-    private List<AuthorRequest> authors;
+    private List<AuthorResponse> authors;
 
     public long getId() {
         return id;
@@ -28,11 +28,11 @@ public final class BookRequest implements Serializable {
         this.title = title;
     }
 
-    public List<AuthorRequest> getAuthors() {
+    public List<AuthorResponse> getAuthors() {
         return authors;
     }
 
-    public void setAuthors(List<AuthorRequest> authors) {
+    public void setAuthors(List<AuthorResponse> authors) {
         this.authors = authors;
     }
 

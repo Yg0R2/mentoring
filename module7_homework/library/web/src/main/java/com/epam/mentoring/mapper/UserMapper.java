@@ -1,7 +1,7 @@
 package com.epam.mentoring.mapper;
 
-import com.epam.mentoring.api.request.UserRequest;
-import com.epam.mentoring.api.response.UserResponse;
+import com.epam.mentoring.request.UserRequest;
+import com.epam.mentoring.response.UserResponse;
 import com.epam.mentoring.domain.UserDAO;
 import com.google.common.reflect.TypeToken;
 import org.springframework.stereotype.Component;

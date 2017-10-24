@@ -1,10 +1,10 @@
 package com.epam.mentoring.api.controller;
 
 import com.epam.mentoring.api.exception.MissingRequestParameterException;
-import com.epam.mentoring.api.request.BookRequest;
+import com.epam.mentoring.request.BookRequest;
 import com.epam.mentoring.mapper.BookMapper;
 import com.epam.mentoring.domain.BookDAO;
-import com.epam.mentoring.api.response.BookResponse;
+import com.epam.mentoring.response.BookResponse;
 import com.epam.mentoring.service.BookService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

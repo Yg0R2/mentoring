@@ -1,7 +1,7 @@
 package com.epam.mentoring.web.controller;
 
 import com.epam.mentoring.api.controller.UserRestController;
-import com.epam.mentoring.api.request.UserRequest;
+import com.epam.mentoring.request.UserRequest;
 import com.epam.mentoring.domain.UserRole;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

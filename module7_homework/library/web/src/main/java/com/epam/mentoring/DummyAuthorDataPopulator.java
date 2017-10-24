@@ -1,9 +1,7 @@
 package com.epam.mentoring;
 
 import com.epam.mentoring.api.controller.AuthorRestController;
-import com.epam.mentoring.api.request.AuthorRequest;
-import com.epam.mentoring.domain.AuthorDAO;
-import com.epam.mentoring.service.AuthorService;
+import com.epam.mentoring.request.AuthorRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

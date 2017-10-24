@@ -1,16 +1,17 @@
-package com.epam.mentoring.api.response;
+package com.epam.mentoring.request;
 
-import com.epam.mentoring.domain.UserRole;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import java.io.Serializable;
+import java.util.List;
 
-public final class UserResponse implements Serializable {
+public final class AuthorRequest implements Serializable {
 
     private long id;
     private String firstName;
     private String lastName;
-    private String emailAddress;
-    private UserRole userRole;
+    @JsonBackReference
+    private List<BookRequest> books;
 
     public long getId() {
         return id;
@@ -36,20 +37,12 @@ public final class UserResponse implements Serializable {
         this.lastName = lastName;
     }
 
-    public String getEmailAddress() {
-        return emailAddress;
+    public List<BookRequest> getBooks() {
+        return books;
     }
 
-    public void setEmailAddress(String emailAddress) {
-        this.emailAddress = emailAddress;
-    }
-
-    public UserRole getUserRole() {
-        return userRole;
-    }
-
-    public void setUserRole(UserRole userRole) {
-        this.userRole = userRole;
+    public void setBooks(List<BookRequest> books) {
+        this.books = books;
     }
 
 }

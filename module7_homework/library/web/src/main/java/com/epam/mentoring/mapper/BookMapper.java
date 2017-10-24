@@ -1,7 +1,7 @@
 package com.epam.mentoring.mapper;
 
-import com.epam.mentoring.api.request.BookRequest;
-import com.epam.mentoring.api.response.BookResponse;
+import com.epam.mentoring.request.BookRequest;
+import com.epam.mentoring.response.BookResponse;
 import com.epam.mentoring.domain.BookDAO;
 import com.google.common.reflect.TypeToken;
 import org.springframework.stereotype.Component;

@@ -2,7 +2,7 @@ package com.epam.mentoring.web.controller;
 
 import com.epam.mentoring.api.controller.AuthorRestController;
 import com.epam.mentoring.api.controller.BookRestController;
-import com.epam.mentoring.api.request.BookRequest;
+import com.epam.mentoring.request.BookRequest;
 import com.epam.mentoring.mapper.AuthorMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

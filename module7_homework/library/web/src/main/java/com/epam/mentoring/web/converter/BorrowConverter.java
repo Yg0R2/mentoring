@@ -1,8 +1,8 @@
 package com.epam.mentoring.web.converter;
 
 import com.epam.mentoring.api.controller.BorrowRestController;
-import com.epam.mentoring.api.request.BorrowRequest;
-import com.epam.mentoring.api.response.BorrowResponse;
+import com.epam.mentoring.request.BorrowRequest;
+import com.epam.mentoring.response.BorrowResponse;
 import com.epam.mentoring.mapper.BorrowMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

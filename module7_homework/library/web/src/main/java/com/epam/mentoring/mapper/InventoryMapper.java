@@ -1,7 +1,7 @@
 package com.epam.mentoring.mapper;
 
-import com.epam.mentoring.api.request.InventoryRequest;
-import com.epam.mentoring.api.response.InventoryResponse;
+import com.epam.mentoring.request.InventoryRequest;
+import com.epam.mentoring.response.InventoryResponse;
 import com.epam.mentoring.domain.InventoryDAO;
 import com.google.common.reflect.TypeToken;
 import org.springframework.stereotype.Component;

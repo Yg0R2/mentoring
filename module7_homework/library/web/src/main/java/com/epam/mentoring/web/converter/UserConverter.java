@@ -1,8 +1,8 @@
 package com.epam.mentoring.web.converter;
 
 import com.epam.mentoring.api.controller.UserRestController;
-import com.epam.mentoring.api.request.UserRequest;
-import com.epam.mentoring.api.response.UserResponse;
+import com.epam.mentoring.request.UserRequest;
+import com.epam.mentoring.response.UserResponse;
 import com.epam.mentoring.mapper.UserMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

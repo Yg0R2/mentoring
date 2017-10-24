@@ -1,19 +1,16 @@
-package com.epam.mentoring.api.request;
+package com.epam.mentoring.response;
 
 import com.epam.mentoring.domain.UserRole;
 
 import java.io.Serializable;
 
-public final class UserRequest implements Serializable {
+public final class UserResponse implements Serializable {
 
     private long id;
     private String firstName;
     private String lastName;
     private String emailAddress;
     private UserRole userRole;
-
-    public UserRequest() {
-    }
 
     public long getId() {
         return id;

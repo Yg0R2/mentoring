@@ -1,8 +1,8 @@
 package com.epam.mentoring.api.controller;
 
 import com.epam.mentoring.api.exception.MissingRequestParameterException;
-import com.epam.mentoring.api.request.BorrowRequest;
-import com.epam.mentoring.api.response.BorrowResponse;
+import com.epam.mentoring.request.BorrowRequest;
+import com.epam.mentoring.response.BorrowResponse;
 import com.epam.mentoring.domain.BorrowDAO;
 import com.epam.mentoring.mapper.BorrowMapper;
 import com.epam.mentoring.service.BorrowService;

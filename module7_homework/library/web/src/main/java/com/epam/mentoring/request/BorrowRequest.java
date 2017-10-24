@@ -1,13 +1,17 @@
-package com.epam.mentoring.api.response;
+package com.epam.mentoring.request;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
 import java.util.Date;
 
-public class BorrowResponse implements Serializable {
+
+public class BorrowRequest implements Serializable {
 
     private long id;
-    private BookResponse book;
-    private UserResponse userBorrowed;
+    private BookRequest book;
+    private UserRequest userBorrowed;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date returnDate;
     private boolean ongoing;
 
@@ -19,19 +23,19 @@ public class BorrowResponse implements Serializable {
         this.id = id;
     }
 
-    public BookResponse getBook() {
+    public BookRequest getBook() {
         return book;
     }
 
-    public void setBook(BookResponse book) {
+    public void setBook(BookRequest book) {
         this.book = book;
     }
 
-    public UserResponse getUserBorrowed() {
+    public UserRequest getUserBorrowed() {
         return userBorrowed;
     }
 
-    public void setUserBorrowed(UserResponse userBorrowed) {
+    public void setUserBorrowed(UserRequest userBorrowed) {
         this.userBorrowed = userBorrowed;
     }
 

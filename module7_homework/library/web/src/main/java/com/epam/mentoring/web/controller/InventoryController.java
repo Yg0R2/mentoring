@@ -1,7 +1,7 @@
 package com.epam.mentoring.web.controller;
 
 import com.epam.mentoring.api.controller.InventoryRestController;
-import com.epam.mentoring.api.request.InventoryRequest;
+import com.epam.mentoring.request.InventoryRequest;
 import com.epam.mentoring.domain.BookDAO;
 import com.epam.mentoring.mapper.BookMapper;
 import com.epam.mentoring.mapper.InventoryMapper;

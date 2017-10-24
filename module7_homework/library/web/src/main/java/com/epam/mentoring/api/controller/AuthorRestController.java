@@ -1,8 +1,8 @@
 package com.epam.mentoring.api.controller;
 
 import com.epam.mentoring.api.exception.MissingRequestParameterException;
-import com.epam.mentoring.api.request.AuthorRequest;
-import com.epam.mentoring.api.response.AuthorResponse;
+import com.epam.mentoring.request.AuthorRequest;
+import com.epam.mentoring.response.AuthorResponse;
 import com.epam.mentoring.mapper.AuthorMapper;
 import com.epam.mentoring.domain.AuthorDAO;
 import com.epam.mentoring.service.AuthorService;

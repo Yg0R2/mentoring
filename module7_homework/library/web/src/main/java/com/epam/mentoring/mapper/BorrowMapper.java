@@ -1,7 +1,7 @@
 package com.epam.mentoring.mapper;
 
-import com.epam.mentoring.api.request.BorrowRequest;
-import com.epam.mentoring.api.response.BorrowResponse;
+import com.epam.mentoring.request.BorrowRequest;
+import com.epam.mentoring.response.BorrowResponse;
 import com.epam.mentoring.domain.BorrowDAO;
 import org.modelmapper.TypeToken;
 import org.springframework.stereotype.Component;

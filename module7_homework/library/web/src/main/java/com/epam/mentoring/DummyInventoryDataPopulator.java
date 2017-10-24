@@ -25,27 +25,21 @@ public class DummyInventoryDataPopulator {
     private BookRestController bookRestController;
     @Autowired
     private InventoryRestController inventoryRestController;
-    @Autowired
-    private UserRestController userRestController;
+
     @Autowired
     private BookMapper bookMapper;
-    @Autowired
-    private UserMapper userMapper;
 
     public void populateInventories() {
         BookResponse bookA = bookRestController.getBook(1);
-        UserResponse userB = userRestController.getUser(2);
 
-        createInventoryItem(bookA, Arrays.asList(userB));
+        createInventoryItem(bookA);
     }
 
-    private void createInventoryItem(BookResponse bookResponse, List<UserResponse> userResponses) {
+    private void createInventoryItem(BookResponse bookResponse) {
         InventoryRequest inventoryRequest = new InventoryRequest();
 
         inventoryRequest.setBook(bookMapper.mapToRequest(bookResponse));
         inventoryRequest.setAvailableCopiesNumber(1);
-        inventoryRequest.setUsersBorrowed(userMapper.mapToRequest(userResponses));
-        inventoryRequest.setReturnDate(Date.from(LocalDate.now().plus(1, ChronoUnit.MONTHS).atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()));
 
         inventoryRestController.createInventory(inventoryRequest);
     }

@@ -14,6 +14,8 @@ public class ApplicationMain {
     @Autowired
     private DummyBookDataPopulator dummyBookDataPopulator;
     @Autowired
+    private DummyBorrowDataPopulator dummyBorrowDataPopulator;
+    @Autowired
     private DummyInventoryDataPopulator dummyInventoryDataPopulator;
     @Autowired
     private DummyUserDataPopulator dummyUserDataPopulator;
@@ -29,6 +31,7 @@ public class ApplicationMain {
             dummyBookDataPopulator.populateBooks();
             dummyUserDataPopulator.populateUsers();
             dummyInventoryDataPopulator.populateInventories();
+            dummyBorrowDataPopulator.populateBorrows();
         };
     }
 

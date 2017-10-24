@@ -10,9 +10,6 @@ public final class InventoryRequest implements Serializable {
     private long id;
     private BookRequest book;
     private int availableCopiesNumber;
-    private List<UserRequest> usersBorrowed;
-    private Date returnDate;
-    private List<UserRequest> requestedForBorrow;
 
     public InventoryRequest() {
     }
@@ -39,30 +36,6 @@ public final class InventoryRequest implements Serializable {
 
     public void setAvailableCopiesNumber(int availableCopiesNumber) {
         this.availableCopiesNumber = availableCopiesNumber;
-    }
-
-    public List<UserRequest> getUsersBorrowed() {
-        return usersBorrowed;
-    }
-
-    public void setUsersBorrowed(List<UserRequest> usersBorrowed) {
-        this.usersBorrowed = usersBorrowed;
-    }
-
-    public Date getReturnDate() {
-        return returnDate;
-    }
-
-    public void setReturnDate(Date returnDate) {
-        this.returnDate = returnDate;
-    }
-
-    public List<UserRequest> getRequestedForBorrow() {
-        return requestedForBorrow;
-    }
-
-    public void setRequestedForBorrow(List<UserRequest> requestedForBorrow) {
-        this.requestedForBorrow = requestedForBorrow;
     }
 
 }

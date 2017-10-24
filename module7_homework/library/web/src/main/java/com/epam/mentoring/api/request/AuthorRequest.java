@@ -1,12 +1,17 @@
 package com.epam.mentoring.api.request;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import java.io.Serializable;
+import java.util.List;
 
 public final class AuthorRequest implements Serializable {
 
     private long id;
     private String firstName;
     private String lastName;
+    @JsonBackReference
+    private List<BookRequest> books;
 
     public long getId() {
         return id;
@@ -30,6 +35,14 @@ public final class AuthorRequest implements Serializable {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public List<BookRequest> getBooks() {
+        return books;
+    }
+
+    public void setBooks(List<BookRequest> books) {
+        this.books = books;
     }
 
 }

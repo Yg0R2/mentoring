@@ -1,5 +1,7 @@
 package com.epam.mentoring.api.request;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -7,6 +9,7 @@ public final class BookRequest implements Serializable {
 
     private long id;
     private String title;
+    @JsonManagedReference
     private List<AuthorRequest> authors;
 
     public long getId() {

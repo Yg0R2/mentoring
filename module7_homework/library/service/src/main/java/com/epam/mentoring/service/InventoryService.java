@@ -7,7 +7,6 @@ import com.epam.mentoring.service.exception.NoSuchEntryException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
-import org.springframework.util.CollectionUtils;
 
 import javax.transaction.Transactional;
 import java.util.List;
@@ -55,18 +54,6 @@ public class InventoryService {
 
         if (inventory.getAvailableCopiesNumber() >= 0) {
             storedInventory.setAvailableCopiesNumber(inventory.getAvailableCopiesNumber());
-        }
-
-        if (!CollectionUtils.isEmpty(inventory.getRequestedForBorrow())) {
-            storedInventory.setRequestedForBorrow(inventory.getRequestedForBorrow());
-        }
-
-        if (Objects.nonNull(inventory.getReturnDate())) {
-            storedInventory.setReturnDate(inventory.getReturnDate());
-        }
-
-        if (Objects.nonNull(inventory.getUsersBorrowed())) {
-            storedInventory.setUsersBorrowed(inventory.getUsersBorrowed());
         }
 
         return storedInventory;

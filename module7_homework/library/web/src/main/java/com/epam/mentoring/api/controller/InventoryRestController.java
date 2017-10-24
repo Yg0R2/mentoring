@@ -37,7 +37,7 @@ public class InventoryRestController {
         return inventoryMapper.mapToResponse(storedInventory);
     }
 
-    @DeleteMapping(path = "inventory")
+    @DeleteMapping(path = "/inventory")
     @ResponseStatus(value = HttpStatus.OK)
     public void deleteInventory(@RequestParam long id) {
         inventoryService.deleteInventory(id);

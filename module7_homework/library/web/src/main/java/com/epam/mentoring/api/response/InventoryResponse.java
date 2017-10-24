@@ -2,15 +2,16 @@ package com.epam.mentoring.api.response;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.Set;
+import java.util.List;
 
 public final class InventoryResponse implements Serializable {
 
     private long id;
     private BookResponse book;
-    private UserResponse userBorrowed;
+    private int availableCopiesNumber;
+    private List<UserResponse> usersBorrowed;
     private Date returnDate;
-    private Set<UserResponse> requestedForBorrow;
+    private List<UserResponse> requestedForBorrow;
 
     public InventoryResponse() {
     }
@@ -31,12 +32,20 @@ public final class InventoryResponse implements Serializable {
         this.book = book;
     }
 
-    public UserResponse getUserBorrowed() {
-        return userBorrowed;
+    public int getAvailableCopiesNumber() {
+        return availableCopiesNumber;
     }
 
-    public void setUserBorrowed(UserResponse userBorrowed) {
-        this.userBorrowed = userBorrowed;
+    public void setAvailableCopiesNumber(int availableCopiesNumber) {
+        this.availableCopiesNumber = availableCopiesNumber;
+    }
+
+    public List<UserResponse> getUsersBorrowed() {
+        return usersBorrowed;
+    }
+
+    public void setUsersBorrowed(List<UserResponse> usersBorrowed) {
+        this.usersBorrowed = usersBorrowed;
     }
 
     public Date getReturnDate() {
@@ -47,11 +56,11 @@ public final class InventoryResponse implements Serializable {
         this.returnDate = returnDate;
     }
 
-    public Set<UserResponse> getRequestedForBorrow() {
+    public List<UserResponse> getRequestedForBorrow() {
         return requestedForBorrow;
     }
 
-    public void setRequestedForBorrow(Set<UserResponse> requestedForBorrow) {
+    public void setRequestedForBorrow(List<UserResponse> requestedForBorrow) {
         this.requestedForBorrow = requestedForBorrow;
     }
 

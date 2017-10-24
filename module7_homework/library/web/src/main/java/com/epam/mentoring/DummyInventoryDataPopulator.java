@@ -14,7 +14,9 @@ import org.springframework.stereotype.Component;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 @Component
 public class DummyInventoryDataPopulator {
@@ -34,14 +36,15 @@ public class DummyInventoryDataPopulator {
         BookResponse bookA = bookRestController.getBook(1);
         UserResponse userB = userRestController.getUser(2);
 
-        createInventoryItem(bookA, userB);
+        createInventoryItem(bookA, Arrays.asList(userB));
     }
 
-    private void createInventoryItem(BookResponse bookResponse, UserResponse userResponse) {
+    private void createInventoryItem(BookResponse bookResponse, List<UserResponse> userResponses) {
         InventoryRequest inventoryRequest = new InventoryRequest();
 
         inventoryRequest.setBook(bookMapper.mapToRequest(bookResponse));
-        inventoryRequest.setUserBorrowed(userMapper.mapToRequest(userResponse));
+        inventoryRequest.setAvailableCopiesNumber(1);
+        inventoryRequest.setUsersBorrowed(userMapper.mapToRequest(userResponses));
         inventoryRequest.setReturnDate(Date.from(LocalDate.now().plus(1, ChronoUnit.MONTHS).atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()));
 
         inventoryRestController.createInventory(inventoryRequest);

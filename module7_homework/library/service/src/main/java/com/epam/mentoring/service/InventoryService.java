@@ -45,6 +45,10 @@ public class InventoryService {
             storedInventory.setBook(inventory.getBook());
         }
 
+        if (inventory.getAvailableCopiesNumber() >= 0) {
+            storedInventory.setAvailableCopiesNumber(inventory.getAvailableCopiesNumber());
+        }
+
         if (!CollectionUtils.isEmpty(inventory.getRequestedForBorrow())) {
             storedInventory.setRequestedForBorrow(inventory.getRequestedForBorrow());
         }
@@ -53,8 +57,8 @@ public class InventoryService {
             storedInventory.setReturnDate(inventory.getReturnDate());
         }
 
-        if (Objects.nonNull(inventory.getUserBorrowed())) {
-            storedInventory.setUserBorrowed(inventory.getUserBorrowed());
+        if (Objects.nonNull(inventory.getUsersBorrowed())) {
+            storedInventory.setUsersBorrowed(inventory.getUsersBorrowed());
         }
 
         return storedInventory;

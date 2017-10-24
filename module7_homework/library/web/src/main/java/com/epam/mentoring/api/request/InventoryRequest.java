@@ -1,16 +1,18 @@
 package com.epam.mentoring.api.request;
 
+
 import java.io.Serializable;
 import java.util.Date;
-import java.util.Set;
+import java.util.List;
 
 public final class InventoryRequest implements Serializable {
 
     private long id;
     private BookRequest book;
-    private UserRequest userBorrowed;
+    private int availableCopiesNumber;
+    private List<UserRequest> usersBorrowed;
     private Date returnDate;
-    private Set<UserRequest> requestedForBorrow;
+    private List<UserRequest> requestedForBorrow;
 
     public InventoryRequest() {
     }
@@ -31,12 +33,20 @@ public final class InventoryRequest implements Serializable {
         this.book = book;
     }
 
-    public UserRequest getUserBorrowed() {
-        return userBorrowed;
+    public int getAvailableCopiesNumber() {
+        return availableCopiesNumber;
     }
 
-    public void setUserBorrowed(UserRequest userBorrowed) {
-        this.userBorrowed = userBorrowed;
+    public void setAvailableCopiesNumber(int availableCopiesNumber) {
+        this.availableCopiesNumber = availableCopiesNumber;
+    }
+
+    public List<UserRequest> getUsersBorrowed() {
+        return usersBorrowed;
+    }
+
+    public void setUsersBorrowed(List<UserRequest> usersBorrowed) {
+        this.usersBorrowed = usersBorrowed;
     }
 
     public Date getReturnDate() {
@@ -47,11 +57,11 @@ public final class InventoryRequest implements Serializable {
         this.returnDate = returnDate;
     }
 
-    public Set<UserRequest> getRequestedForBorrow() {
+    public List<UserRequest> getRequestedForBorrow() {
         return requestedForBorrow;
     }
 
-    public void setRequestedForBorrow(Set<UserRequest> requestedForBorrow) {
+    public void setRequestedForBorrow(List<UserRequest> requestedForBorrow) {
         this.requestedForBorrow = requestedForBorrow;
     }
 

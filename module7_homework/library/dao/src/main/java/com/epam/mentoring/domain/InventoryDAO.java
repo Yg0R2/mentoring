@@ -18,9 +18,12 @@ public final class InventoryDAO implements Serializable {
     @OneToOne(targetEntity = BookDAO.class)
     private BookDAO book;
 
+    @Column(name = "available_copies_number", nullable = false)
+    private int availableCopiesNumber;
+
     @JoinColumn(name = "user_id", nullable = false)
-    @OneToOne(targetEntity = UserDAO.class)
-    private UserDAO userBorrowed;
+    @OneToMany(targetEntity = UserDAO.class)
+    private List<UserDAO> usersBorrowed;
 
     @Column(name = "return_date")
     @Temporal(TemporalType.DATE)
@@ -49,12 +52,20 @@ public final class InventoryDAO implements Serializable {
         this.book = book;
     }
 
-    public UserDAO getUserBorrowed() {
-        return userBorrowed;
+    public int getAvailableCopiesNumber() {
+        return availableCopiesNumber;
     }
 
-    public void setUserBorrowed(UserDAO userBorrowed) {
-        this.userBorrowed = userBorrowed;
+    public void setAvailableCopiesNumber(int availableCopiesNumber) {
+        this.availableCopiesNumber = availableCopiesNumber;
+    }
+
+    public List<UserDAO> getUsersBorrowed() {
+        return usersBorrowed;
+    }
+
+    public void setUsersBorrowed(List<UserDAO> usersBorrowed) {
+        this.usersBorrowed = usersBorrowed;
     }
 
     public Date getReturnDate() {

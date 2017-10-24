@@ -1,4 +1,5 @@
 <#-- @ftlroot "../.." -->
+<#import "/spring.ftl" as spring>
 <#import "/ftl/author/author_macro.ftl" as authorMacro>
 
 <#macro displayBook book, displayAuthors=true>
@@ -17,4 +18,14 @@
             </#list>
         </#if>
     </fieldset>
+</#macro>
+
+<#macro displayBooksSingleSelect books, bindPath>
+    <@spring.bind bindPath />
+
+    <select id="${spring.status.expression}" name="${spring.status.expression}">
+        <#list books as book>
+            <option value="${book.getId()}">${book.getTitle()}</option>
+        </#list>
+    </select>
 </#macro>

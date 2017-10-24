@@ -18,7 +18,7 @@
 
             <li>
                 <label>Author(s):</label>
-                <@authorMacro.displayAuthorsSelect createBookForm.getAuthors()![] "createBookForm.authors" />
+                <@authorMacro.displayAuthorsMultiSelect createBookForm.getAuthors()![] "createBookForm.authors" />
             </li>
         </ul>
     </fieldset>

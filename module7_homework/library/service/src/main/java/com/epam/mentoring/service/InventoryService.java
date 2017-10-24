@@ -1,5 +1,6 @@
 package com.epam.mentoring.service;
 
+import com.epam.mentoring.domain.BookDAO;
 import com.epam.mentoring.domain.InventoryDAO;
 import com.epam.mentoring.repository.InventoryRepository;
 import com.epam.mentoring.service.exception.NoSuchEntryException;
@@ -11,6 +12,7 @@ import org.springframework.util.CollectionUtils;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Service
 public class InventoryService {
@@ -21,6 +23,12 @@ public class InventoryService {
     @Transactional
     public InventoryDAO createInventory(InventoryDAO inventory) {
         return inventoryRepository.save(inventory);
+    }
+
+    public List<BookDAO> getBooksFromInventory() {
+        List<InventoryDAO> inventories = getInventories();
+
+        return inventories.stream().map(InventoryDAO::getBook).collect(Collectors.toList());
     }
 
     public InventoryDAO getInventoryById(long id) {

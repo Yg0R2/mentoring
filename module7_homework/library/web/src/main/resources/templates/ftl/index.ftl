@@ -28,6 +28,21 @@ Author links:
     </li>
 </ul>
 
+Inventory links:
+<ul>
+    <li>
+        <a href="/create-inventory">Create new inventory</a>
+    </li>
+
+    <li>
+        <a href="/inventory">Search for inventory</a>
+    </li>
+
+    <li>
+        <a href="/inventories">List all inventories</a>
+    </li>
+</ul>
+
 User links:
 <ul>
     <li>

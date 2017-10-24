@@ -20,7 +20,7 @@
     </fieldset>
 </#macro>
 
-<#macro displayAuthorsSelect authors, bindPath>
+<#macro displayAuthorsMultiSelect authors, bindPath>
     <@spring.bind bindPath />
 
     <select multiple id="${spring.status.expression}" name="${spring.status.expression}">

@@ -62,7 +62,7 @@ public class InventoryRestController {
 
     @GetMapping(path = "/inventories")
     @ResponseStatus(value = HttpStatus.OK)
-    public List<InventoryResponse> getLibraries() {
+    public List<InventoryResponse> getInventories() {
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("Get all inventories.");
         }

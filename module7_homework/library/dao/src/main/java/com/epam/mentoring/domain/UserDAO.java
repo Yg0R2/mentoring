@@ -20,6 +20,9 @@ public final class UserDAO implements Serializable {
     @GeneratedValue(strategy = GenerationType.TABLE)
     private long id;
 
+    @Column(name = "active", nullable = false)
+    private boolean active;
+
     @Column(name = "first_name", nullable = false, length = 50)
     private String firstName;
 
@@ -43,6 +46,14 @@ public final class UserDAO implements Serializable {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 
     public String getFirstName() {

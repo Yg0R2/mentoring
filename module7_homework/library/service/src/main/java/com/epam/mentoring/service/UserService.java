@@ -50,6 +50,8 @@ public class UserService {
     public UserDAO updateUser(UserDAO user) {
         UserDAO storedUser = getUserById(user.getId());
 
+        storedUser.setActive(user.isActive());
+
         if (Objects.nonNull(user.getFirstName())) {
             storedUser.setFirstName(user.getFirstName());
         }

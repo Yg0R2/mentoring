@@ -6,9 +6,15 @@
         <legend>${user.getFirstName()}, ${user.getLastName()}</legend>
 
         <ul>
+            <li>Active: ${user.isActive()?then("yes", "no")}</li>
             <li>Email address: ${user.getEmailAddress()}</li>
             <li>Role: ${user.getUserRole()}</li>
             <li>User additional data. // TODO: Add more user data</li>
+            <li>
+                <form method="POST" action="/user-edit?id=${user.getId()}">
+                    <input type="submit" value="Edit">
+                </form>
+            </li>
         </ul>
     </fieldset>
 </#macro>

@@ -17,6 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 public class UserController {
 
     private static final String USER_CREATE_VIEW = "ftl/user/user_create_view";
+    private static final String USER_EDIT_VIEW = "ftl/user/user_edit_view";
     private static final String USER_LIST_VIEW = "ftl/user/user_list_view";
     private static final String USER_SEARCH_VIEW = "ftl/user/user_search_view";
     private static final String USER_VIEW = "ftl/user/user_view";
@@ -48,6 +49,16 @@ public class UserController {
         return new ModelAndView(USER_VIEW, modelMap);
     }
 
+    @PostMapping(path = "/user-edit", params = "id")
+    public ModelAndView editUser(@RequestParam long id) {
+        ModelMap modelMap = new ModelMap();
+
+        modelMap.put("availableUserRoles", UserRole.values());
+        modelMap.put("user", userRestController.getUser(id));
+
+        return new ModelAndView(USER_EDIT_VIEW, modelMap);
+    }
+
     @GetMapping(path = "/user")
     public ModelAndView getUser() {
         return new ModelAndView(USER_SEARCH_VIEW);
@@ -69,6 +80,15 @@ public class UserController {
         modelMap.put("users", userRestController.getUsers());
 
         return new ModelAndView(USER_LIST_VIEW, modelMap);
+    }
+
+    @PostMapping(path = "/user-update")
+    public ModelAndView updateUser(@ModelAttribute("updateUserForm") UserRequest userRequest, BindingResult result) {
+        ModelMap modelMap = new ModelMap();
+
+        modelMap.put("user", userRestController.updateUser(userRequest));
+
+        return new ModelAndView(USER_VIEW, modelMap);
     }
 
 }

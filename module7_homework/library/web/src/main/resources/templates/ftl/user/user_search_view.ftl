@@ -6,7 +6,7 @@
 <fieldset>
     <legend>Get User by id</legend>
 
-    <form id="get-user-detail-form" method="POST" action="/user">
+    <form id="get-user-by-id" method="POST" action="/user">
         User id:<br/>
         <input name="id" value="" required="true">
 

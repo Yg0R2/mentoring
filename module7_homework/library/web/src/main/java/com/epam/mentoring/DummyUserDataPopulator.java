@@ -21,6 +21,7 @@ public class DummyUserDataPopulator {
     private void createUser(String firstName, String lastName, UserRole userRole) {
         UserRequest userRequest = new UserRequest();
 
+        userRequest.setActive(true);
         userRequest.setFirstName(firstName);
         userRequest.setLastName(lastName);
         userRequest.setEmailAddress(firstName + "." + lastName + "@library.com");

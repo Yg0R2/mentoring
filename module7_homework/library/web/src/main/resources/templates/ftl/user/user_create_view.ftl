@@ -11,6 +11,11 @@
 
         <ul>
             <li>
+                <label>Active:</label>
+                <input name="active" type="checkbox" checked>
+            </li>
+
+            <li>
                 <label>First Name:</label>
                 <input name="firstName" required value="">
             </li>

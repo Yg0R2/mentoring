@@ -7,6 +7,7 @@ import java.io.Serializable;
 public final class UserRequest implements Serializable {
 
     private long id;
+    private boolean active;
     private String firstName;
     private String lastName;
     private String emailAddress;
@@ -21,6 +22,14 @@ public final class UserRequest implements Serializable {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 
     public String getFirstName() {

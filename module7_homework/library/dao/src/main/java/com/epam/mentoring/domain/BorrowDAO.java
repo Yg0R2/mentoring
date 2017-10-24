@@ -24,8 +24,8 @@ public final class BorrowDAO {
     @Temporal(TemporalType.DATE)
     private Date returnDate;
 
-    @Column(name = "ongoing", nullable = false)
-    private boolean ongoing;
+    @Column(name = "returned", nullable = false)
+    private boolean returned;
 
     public BorrowDAO() {
     }
@@ -62,12 +62,12 @@ public final class BorrowDAO {
         this.returnDate = returnDate;
     }
 
-    public boolean isOngoing() {
-        return ongoing;
+    public boolean isReturned() {
+        return returned;
     }
 
-    public void setOngoing(boolean ongoing) {
-        this.ongoing = ongoing;
+    public void setReturned(boolean returned) {
+        this.returned = returned;
     }
 
 }

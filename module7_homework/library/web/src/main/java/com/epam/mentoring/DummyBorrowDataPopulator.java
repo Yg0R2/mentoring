@@ -47,7 +47,7 @@ public class DummyBorrowDataPopulator {
         borrowRequest.setBook(bookMapper.mapToRequest(bookResponse));
         borrowRequest.setUserBorrowed(userMapper.mapToRequest(userResponse));
         borrowRequest.setReturnDate(DateUtils.addDays(new Date(), 5));
-        borrowRequest.setOngoing(true);
+        borrowRequest.setReturned(false);
 
         borrowRestController.createBorrow(borrowRequest);
     }
@@ -58,7 +58,7 @@ public class DummyBorrowDataPopulator {
         borrow.setBook(bookMapper.mapToDao(bookResponse));
         borrow.setUserBorrowed(userMapper.mapToDao(userResponse));
         borrow.setReturnDate(DateUtils.addDays(new Date(), -5));
-        borrow.setOngoing(true);
+        borrow.setReturned(false);
 
         borrowRepository.save(borrow);
     }

@@ -24,7 +24,7 @@ public class ReminderService {
     @PostConstruct
     @Scheduled(cron = "0 0 7 * * MON-FRI")
     public void remindUsers() {
-        List<BorrowDAO> expiredBorrows = borrowService.getOngoingAndExpiredBorrows();
+        List<BorrowDAO> expiredBorrows = borrowService.getNotReturnedAndExpiredBorrows();
 
         LOGGER.info("Reminding {} user(s) whom have expired books.", expiredBorrows.size());
 

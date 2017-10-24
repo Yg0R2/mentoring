@@ -3,6 +3,7 @@ package com.epam.mentoring.web.controller;
 import com.epam.mentoring.api.controller.BookRestController;
 import com.epam.mentoring.api.controller.BorrowRestController;
 import com.epam.mentoring.api.controller.UserRestController;
+import com.epam.mentoring.domain.BorrowDAO;
 import com.epam.mentoring.request.BorrowRequest;
 import com.epam.mentoring.response.BorrowResponse;
 import com.epam.mentoring.service.exception.InvalidParameterException;
@@ -10,10 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.Arrays;
@@ -23,6 +21,7 @@ import java.util.List;
 public class BorrowController {
 
     private static final String BORROW_CREATE_VIEW = "ftl/borrow/borrow_create_view";
+    private static final String BORROW_EDIT_VIEW = "ftl/borrow/borrow_edit_view";
     private static final String BORROW_LIST_VIEW = "ftl/borrow/borrow_list_view";
     private static final String BORROW_SEARCH_VIEW = "ftl/borrow/borrow_search_view";
     private static final String BORROW_VIEW = "ftl/borrow/borrow_view";
@@ -48,7 +47,7 @@ public class BorrowController {
     @PostMapping(path = "/create-borrow")
     public ModelAndView createBorrow(@ModelAttribute("createBorrowForm") BorrowRequest borrowRequest, BindingResult result) {
         if (result.hasErrors()) {
-            return getErrorModelAndView(result.getAllErrors());
+            return getCreateModelAndViewWithErrors(result.getAllErrors());
         }
 
         BorrowResponse borrowResponse;
@@ -56,7 +55,7 @@ public class BorrowController {
             borrowResponse = borrowRestController.createBorrow(borrowRequest);
         }
         catch (InvalidParameterException e) {
-            return getErrorModelAndView(Arrays.asList(e.getMessage()));
+            return getCreateModelAndViewWithErrors(Arrays.asList(e.getMessage()));
         }
 
         ModelMap modelMap = new ModelMap();
@@ -67,12 +66,21 @@ public class BorrowController {
         return new ModelAndView(BORROW_VIEW, modelMap);
     }
 
+    @PostMapping(path = "/borrow-edit", params = "id")
+    public ModelAndView editBorrow(@RequestParam long id) {
+        ModelMap modelMap = new ModelMap();
+
+        modelMap.put("borrow", borrowRestController.getBorrow(id));
+
+        return new ModelAndView(BORROW_EDIT_VIEW, modelMap);
+    }
+
     @GetMapping(path = "/borrow")
     public ModelAndView getBorrow() {
         return new ModelAndView(BORROW_SEARCH_VIEW);
     }
 
-    @PostMapping(path = "/borrow")
+    @PostMapping(path = "/borrow", params = "id")
     public ModelAndView getBorrow(@RequestParam long id) {
         ModelMap modelMap = new ModelMap();
 
@@ -90,7 +98,16 @@ public class BorrowController {
         return new ModelAndView(BORROW_LIST_VIEW, modelMap);
     }
 
-    private ModelAndView getErrorModelAndView(List<?> errors) {
+    @PostMapping(path = "/borrow-update")
+    public ModelAndView updateBorrow(@ModelAttribute("updateBorrowForm") BorrowRequest borrowRequest, BindingResult result) {
+        ModelMap modelMap = new ModelMap();
+
+        modelMap.put("borrow", borrowRestController.updateBorrow(borrowRequest));
+
+        return new ModelAndView(BORROW_VIEW, modelMap);
+    }
+
+    private ModelAndView getCreateModelAndViewWithErrors(List<?> errors) {
         ModelAndView errorModelAndView = createBorrow();
 
         ModelMap modelMap = errorModelAndView.getModelMap();

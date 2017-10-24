@@ -9,7 +9,12 @@
             <li>Book title: ${borrow.getBook().getTitle()}</li>
             <li>User Borrowed: ${borrow.getUserBorrowed().getFirstName()}, ${borrow.getUserBorrowed().getLastName()}</li>
             <li>Return date: ${borrow.getReturnDate()?date}</li>
-            <li>Returned: ${(!borrow.isOngoing())?then("yes", "no")}</li>
+            <li>Returned: ${borrow.isReturned()?then("yes", "no")}</li>
+            <li>
+                <form method="POST" action="/borrow-edit?id=${borrow.getId()}">
+                    <input type="submit" value="Edit">
+                </form>
+            </li>
         </ul>
     </fieldset>
 </#macro>

@@ -7,7 +7,6 @@ import com.epam.mentoring.service.exception.NoSuchEntryException;
 import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -61,16 +60,16 @@ public class BorrowService {
         return borrowRepository.findAll();
     }
 
-    public List<BorrowDAO> getOngoingAndExpiredBorrows() {
-        return borrowRepository.findByOngoingIsTrueAndReturnDateIsBefore(new Date());
+    public List<BorrowDAO> getNotReturnedAndExpiredBorrows() {
+        return borrowRepository.findByReturnedIsFalseAndReturnDateIsBefore(new Date());
     }
 
     @Transactional
     public BorrowDAO updateBorrow(BorrowDAO borrow) {
         BorrowDAO storedBorrow = getBorrowById(borrow.getId());
 
-        if (borrow.isOngoing()) {
-            storedBorrow.setOngoing(borrow.isOngoing());
+        if (borrow.isReturned()) {
+            storedBorrow.setReturned(borrow.isReturned());
         }
 
         if (Objects.nonNull(borrow.getReturnDate())) {

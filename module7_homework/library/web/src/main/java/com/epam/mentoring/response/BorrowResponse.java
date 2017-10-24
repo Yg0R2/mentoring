@@ -9,7 +9,7 @@ public class BorrowResponse implements Serializable {
     private BookResponse book;
     private UserResponse userBorrowed;
     private Date returnDate;
-    private boolean ongoing;
+    private boolean returned;
 
     public long getId() {
         return id;
@@ -43,12 +43,12 @@ public class BorrowResponse implements Serializable {
         this.returnDate = returnDate;
     }
 
-    public boolean isOngoing() {
-        return ongoing;
+    public boolean isReturned() {
+        return returned;
     }
 
-    public void setOngoing(boolean ongoing) {
-        this.ongoing = ongoing;
+    public void setReturned(boolean returned) {
+        this.returned = returned;
     }
 
 }

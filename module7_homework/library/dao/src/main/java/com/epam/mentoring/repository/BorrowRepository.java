@@ -15,7 +15,6 @@ public interface BorrowRepository extends CrudRepository<BorrowDAO, Long> {
 
     BorrowDAO findById(long id);
 
-    //@Query("SELECT r FROM BorrowDAO r WHERE r.returnDate < CURRENT_DATE AND r.ongoing = true")
-    List<BorrowDAO> findByOngoingIsTrueAndReturnDateIsBefore(Date beforeDate);
+    List<BorrowDAO> findByReturnedIsFalseAndReturnDateIsBefore(Date beforeDate);
 
 }

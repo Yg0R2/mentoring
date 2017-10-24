@@ -74,7 +74,7 @@ public class BorrowRestController {
 
     @GetMapping(path = "/expired-borrows")
     public List<BorrowResponse> getExpiredBorrows() {
-        List<BorrowDAO> storedBorrows = borrowService.getOngoingAndExpiredBorrows();
+        List<BorrowDAO> storedBorrows = borrowService.getNotReturnedAndExpiredBorrows();
 
         return borrowMapper.mapToResponse(storedBorrows);
     }

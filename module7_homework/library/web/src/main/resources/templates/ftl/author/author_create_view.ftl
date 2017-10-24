@@ -3,6 +3,8 @@
 
 <@commonMacro.backToHome />
 
+<@commonMacro.displayErrorsIfPresent errors![] />
+
 <form id="create-author-form" method="POST" modelAttribute="createAuthorForm" action="/create-author" enctype="application/json">
     <fieldset>
         <legend>Create new author</legend>

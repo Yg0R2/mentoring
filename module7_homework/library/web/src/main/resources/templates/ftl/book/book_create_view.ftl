@@ -4,6 +4,8 @@
 
 <@commonMacro.backToHome />
 
+<@commonMacro.displayErrorsIfPresent errors![] />
+
 <form id="create-book-form" method="POST" modelAttribute="createBookForm" action="/create-book" enctype="application/json">
     <fieldset>
         <legend>Create new book</legend>
@@ -16,7 +18,7 @@
 
             <li>
                 <label>Author(s):</label>
-                <@authorMacro.displayAuthorsSelect createBookForm.getAuthors() "createBookForm.authors" />
+                <@authorMacro.displayAuthorsSelect createBookForm.getAuthors()![] "createBookForm.authors" />
             </li>
         </ul>
     </fieldset>

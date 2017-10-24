@@ -16,7 +16,7 @@ public final class BorrowDAO {
     @OneToOne(targetEntity = BookDAO.class)
     private BookDAO book;
 
-    @JoinColumn(name = "user_id", nullable = false, referencedColumnName = "id")
+    @JoinColumn(name = "user_id", nullable = false)
     @ManyToOne(targetEntity = UserDAO.class)
     private UserDAO userBorrowed;
 

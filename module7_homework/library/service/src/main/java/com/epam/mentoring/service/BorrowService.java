@@ -2,9 +2,12 @@ package com.epam.mentoring.service;
 
 import com.epam.mentoring.domain.BorrowDAO;
 import com.epam.mentoring.repository.BorrowRepository;
+import com.epam.mentoring.service.exception.InvalidParameterException;
 import com.epam.mentoring.service.exception.NoSuchEntryException;
+import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -20,8 +23,28 @@ public class BorrowService {
     private BorrowRepository borrowRepository;
 
     @Transactional
-    public BorrowDAO createBorrow(BorrowDAO request) {
-        return borrowRepository.save(request);
+    public BorrowDAO createBorrow(BorrowDAO borrow) {
+        Date nextMonth = DateUtils.addMonths(new Date(), 1);
+
+        Date returnDate = borrow.getReturnDate();
+        if (returnDate.before(new Date())) {
+            throw new InvalidParameterException("Return date should be in the future.");
+        }
+        else if (returnDate.after(nextMonth)) {
+            throw new InvalidParameterException("Return date should maximum 1 month.");
+        }
+
+        return borrowRepository.save(borrow);
+    }
+
+    @Transactional
+    public void deleteBorrow(long id) {
+        try {
+            borrowRepository.delete(id);
+        }
+        catch (EmptyResultDataAccessException e) {
+            throw new NoSuchEntryException("Borrow doesn't exist with the requested id=" + id);
+        }
     }
 
     public BorrowDAO getBorrowById(long id) {
@@ -55,16 +78,6 @@ public class BorrowService {
         }
 
         return storedBorrow;
-    }
-
-    @Transactional
-    public void deleteBorrow(long id) {
-        try {
-            borrowRepository.delete(id);
-        }
-        catch (EmptyResultDataAccessException e) {
-            throw new NoSuchEntryException("Borrow doesn't exist with the requested id=" + id);
-        }
     }
 
 }

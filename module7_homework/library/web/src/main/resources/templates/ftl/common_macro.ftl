@@ -6,7 +6,7 @@
     <#if errors?has_content>
         <#list errors as error>
             <div class="error-message">
-                ${error.toString()}<br />
+                ${error}<br />
             </div>
         </#list>
     </#if>

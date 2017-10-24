@@ -22,6 +22,16 @@ public class UserService {
         return userRepository.save(user);
     }
 
+    @Transactional
+    public void deleteUser(long id) {
+        try {
+            userRepository.delete(id);
+        }
+        catch (EmptyResultDataAccessException e) {
+            throw new NoSuchEntryException("User doesn't exist with the requested id=" + id);
+        }
+    }
+
     public UserDAO getUserById(long id) {
         UserDAO user = userRepository.findById(id);
 
@@ -57,16 +67,6 @@ public class UserService {
         }
 
         return storedUser;
-    }
-
-    @Transactional
-    public void deleteUser(long id) {
-        try {
-            userRepository.delete(id);
-        }
-        catch (EmptyResultDataAccessException e) {
-            throw new NoSuchEntryException("User doesn't exist with the requested id=" + id);
-        }
     }
 
 }

@@ -4,6 +4,8 @@ import com.epam.mentoring.api.controller.BookRestController;
 import com.epam.mentoring.api.controller.BorrowRestController;
 import com.epam.mentoring.api.controller.UserRestController;
 import com.epam.mentoring.request.BorrowRequest;
+import com.epam.mentoring.response.BorrowResponse;
+import com.epam.mentoring.service.exception.InvalidParameterException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -13,6 +15,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.util.Arrays;
+import java.util.List;
 
 @Controller
 public class BorrowController {
@@ -43,16 +48,21 @@ public class BorrowController {
     @PostMapping(path = "/create-borrow")
     public ModelAndView createBorrow(@ModelAttribute("createBorrowForm") BorrowRequest borrowRequest, BindingResult result) {
         if (result.hasErrors()) {
-            ModelAndView defaultCreateForm = createBorrow();
-            defaultCreateForm.getModelMap().put("errors", result.getAllErrors());
+            return getErrorModelAndView(result.getAllErrors());
+        }
 
-            return defaultCreateForm;
+        BorrowResponse borrowResponse;
+        try {
+            borrowResponse = borrowRestController.createBorrow(borrowRequest);
+        }
+        catch (InvalidParameterException e) {
+            return getErrorModelAndView(Arrays.asList(e.getMessage()));
         }
 
         ModelMap modelMap = new ModelMap();
 
         modelMap.put("displaySuccessMessage", true);
-        modelMap.put("borrow", borrowRestController.createBorrow(borrowRequest));
+        modelMap.put("borrow", borrowResponse);
 
         return new ModelAndView(BORROW_VIEW, modelMap);
     }
@@ -78,6 +88,16 @@ public class BorrowController {
         modelMap.put("borrows", borrowRestController.getBorrows());
 
         return new ModelAndView(BORROW_LIST_VIEW, modelMap);
+    }
+
+    private ModelAndView getErrorModelAndView(List<?> errors) {
+        ModelAndView errorModelAndView = createBorrow();
+
+        ModelMap modelMap = errorModelAndView.getModelMap();
+
+        modelMap.put("errors", errors);
+
+        return errorModelAndView;
     }
 
 }

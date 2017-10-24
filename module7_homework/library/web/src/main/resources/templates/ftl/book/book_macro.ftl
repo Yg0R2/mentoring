@@ -24,6 +24,10 @@
     <@spring.bind bindPath />
 
     <select <#if multiple>multiple</#if> id="${spring.status.expression}" name="${spring.status.expression}">
+        <#if !multiple>
+            <option value="" selected>Not selected</option>
+        </#if>
+
         <#list books as book>
             <option value="${book.getId()}">${book.getTitle()}</option>
         </#list>

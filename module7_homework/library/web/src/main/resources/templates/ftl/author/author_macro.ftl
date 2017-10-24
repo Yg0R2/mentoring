@@ -20,10 +20,14 @@
     </fieldset>
 </#macro>
 
-<#macro displayAuthorsMultiSelect authors, bindPath>
+<#macro displayAuthorsSelect authors, bindPath, multiple=false>
     <@spring.bind bindPath />
 
-    <select multiple id="${spring.status.expression}" name="${spring.status.expression}">
+    <select <#if multiple>multiple</#if> id="${spring.status.expression}" name="${spring.status.expression}">
+        <#if !multiple>
+            <option value="" selected>Not selected</option>
+        </#if>
+
         <#list authors as author>
             <option value="${author.getId()}">${author.getFirstName()}, ${author.getLastName()}</option>
         </#list>

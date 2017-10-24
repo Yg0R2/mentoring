@@ -24,6 +24,16 @@ public class InventoryService {
         return inventoryRepository.save(inventory);
     }
 
+    @Transactional
+    public void deleteInventory(long id) {
+        try {
+            inventoryRepository.delete(id);
+        }
+        catch (EmptyResultDataAccessException e) {
+            throw new NoSuchEntryException("Inventory doesn't exist with the requested id=" + id);
+        }
+    }
+
     public List<BookDAO> getBooksFromInventory() {
         List<InventoryDAO> inventories = getInventories();
 
@@ -57,16 +67,6 @@ public class InventoryService {
         }
 
         return storedInventory;
-    }
-
-    @Transactional
-    public void deleteInventory(long id) {
-        try {
-            inventoryRepository.delete(id);
-        }
-        catch (EmptyResultDataAccessException e) {
-            throw new NoSuchEntryException("Inventory doesn't exist with the requested id=" + id);
-        }
     }
 
 }

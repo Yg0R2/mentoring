@@ -23,6 +23,16 @@ public class AuthorService {
         return authorRepository.save(author);
     }
 
+    @Transactional
+    public void deleteAuthor(long id) {
+        try {
+            authorRepository.delete(id);
+        }
+        catch (EmptyResultDataAccessException e) {
+            throw new NoSuchEntryException("Author doesn't exist with the requested id=" + id);
+        }
+    }
+
     public AuthorDAO getAuthorById(long id) {
         AuthorDAO author = authorRepository.findById(id);
 
@@ -31,6 +41,10 @@ public class AuthorService {
         }
 
         return author;
+    }
+
+    public List<AuthorDAO> getAuthors() {
+        return authorRepository.findAll();
     }
 
     @Transactional
@@ -50,20 +64,6 @@ public class AuthorService {
         }
 
         return storedAuthor;
-    }
-
-    public List<AuthorDAO> getAuthors() {
-        return authorRepository.findAll();
-    }
-
-    @Transactional
-    public void deleteAuthor(long id) {
-        try {
-            authorRepository.delete(id);
-        }
-        catch (EmptyResultDataAccessException e) {
-            throw new NoSuchEntryException("Author doesn't exist with the requested id=" + id);
-        }
     }
 
 }

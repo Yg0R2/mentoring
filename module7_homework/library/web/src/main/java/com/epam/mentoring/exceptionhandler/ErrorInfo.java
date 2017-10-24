@@ -1,4 +1,4 @@
-package com.epam.mentoring.api.exceptionhandler;
+package com.epam.mentoring.exceptionhandler;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;

@@ -17,6 +17,10 @@
     <@spring.bind bindPath />
 
     <select <#if multiple>multiple</#if> id="${spring.status.expression}" name="${spring.status.expression}">
+        <#if !multiple>
+            <option value="" selected>Not selected</option>
+        </#if>
+
         <#list users as user>
             <option value="${user.getId()}">${user.getFirstName()}, ${user.getLastName()}</option>
         </#list>

@@ -23,6 +23,16 @@ public class BookService {
         return bookRepository.save(book);
     }
 
+    @Transactional
+    public void deleteBook(long id) {
+        try {
+            bookRepository.delete(id);
+        }
+        catch (EmptyResultDataAccessException e) {
+            throw new NoSuchEntryException("Book doesn't exist with the requested id=" + id);
+        }
+    }
+
     public BookDAO getBookById(long id) {
         BookDAO book = bookRepository.findById(id);
 
@@ -50,16 +60,6 @@ public class BookService {
         }
 
         return storedBook;
-    }
-
-    @Transactional
-    public void deleteBook(long id) {
-        try {
-            bookRepository.delete(id);
-        }
-        catch (EmptyResultDataAccessException e) {
-            throw new NoSuchEntryException("Book doesn't exist with the requested id=" + id);
-        }
     }
 
 }

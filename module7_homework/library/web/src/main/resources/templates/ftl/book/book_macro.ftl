@@ -20,10 +20,10 @@
     </fieldset>
 </#macro>
 
-<#macro displayBooksSingleSelect books, bindPath>
+<#macro displayBooksSelect books, bindPath, multiple=false>
     <@spring.bind bindPath />
 
-    <select id="${spring.status.expression}" name="${spring.status.expression}">
+    <select <#if multiple>multiple</#if> id="${spring.status.expression}" name="${spring.status.expression}">
         <#list books as book>
             <option value="${book.getId()}">${book.getTitle()}</option>
         </#list>

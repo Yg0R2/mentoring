@@ -13,7 +13,7 @@
         <ul>
             <li>
                 <label>Book:</label>
-                <@bookMacro.displayBooksSingleSelect availableBooks, "createInventoryForm.book" />
+                <@bookMacro.displayBooksSelect availableBooks, "createInventoryForm.book" />
             </li>
             <li>
                 <label>Available copies:</label>

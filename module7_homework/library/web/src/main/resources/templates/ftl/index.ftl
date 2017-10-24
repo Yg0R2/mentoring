@@ -27,3 +27,18 @@ Author links:
         <a href="/authors">List all authors</a>
     </li>
 </ul>
+
+User links:
+<ul>
+    <li>
+        <a href="/create-user">Create new user</a>
+    </li>
+
+    <li>
+        <a href="/user">Search for user</a>
+    </li>
+
+    <li>
+        <a href="/users">List all users</a>
+    </li>
+</ul>

@@ -1,5 +1,5 @@
 <#macro backToHome>
-    <a href="/"><< Back to home</a>
+    <a href="/links"><< Back to home</a>
 </#macro>
 
 <#macro displayErrorsIfPresent errors>

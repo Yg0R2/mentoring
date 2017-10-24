@@ -40,6 +40,10 @@ public class InventoryService {
         return inventories.stream().map(InventoryDAO::getBook).collect(Collectors.toList());
     }
 
+    public InventoryDAO getInventoryByBookId(long bookId) {
+        return inventoryRepository.findByBook_Id(bookId);
+    }
+
     public InventoryDAO getInventoryById(long id) {
         InventoryDAO inventory = inventoryRepository.findById(id);
 

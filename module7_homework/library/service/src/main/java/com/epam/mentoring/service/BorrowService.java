@@ -1,6 +1,8 @@
 package com.epam.mentoring.service;
 
 import com.epam.mentoring.domain.BorrowDAO;
+import com.epam.mentoring.domain.InventoryDAO;
+import com.epam.mentoring.domain.UserDAO;
 import com.epam.mentoring.repository.BorrowRepository;
 import com.epam.mentoring.service.exception.InvalidParameterException;
 import com.epam.mentoring.service.exception.NoSuchEntryException;
@@ -20,9 +22,26 @@ public class BorrowService {
 
     @Autowired
     private BorrowRepository borrowRepository;
+    @Autowired
+    private InventoryService inventoryService;
 
     @Transactional
     public BorrowDAO createBorrow(BorrowDAO borrow) {
+        /*InventoryDAO inventory = inventoryService.getInventoryByBookId(borrow.getBook().getId());
+
+        if (inventory.getAvailableCopiesNumber() < 1) {
+            UserDAO userWantToBorrow = borrow.getUserBooked();
+
+            borrow.setUserBooked(userWantToBorrow);
+
+            borrow.setUserBorrowed(null);
+        }
+        else {
+            int currentAmount = inventory.getAvailableCopiesNumber();
+
+            inventory.setAvailableCopiesNumber(currentAmount - 1);
+        }*/
+
         Date nextMonth = DateUtils.addMonths(new Date(), 1);
 
         Date returnDate = borrow.getReturnDate();

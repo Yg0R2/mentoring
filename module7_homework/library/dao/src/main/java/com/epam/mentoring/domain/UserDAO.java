@@ -33,6 +33,9 @@ public final class UserDAO implements Serializable {
     @Pattern(regexp = "^[A-Za-z0-9._%-+]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}$")
     private String emailAddress;
 
+    @Column(name = "password", nullable = false)
+    private String password;
+
     @Column(name = "user_role", nullable = false)
     @Enumerated(EnumType.STRING)
     private UserRole userRole;
@@ -78,6 +81,14 @@ public final class UserDAO implements Serializable {
 
     public void setEmailAddress(String emailAddress) {
         this.emailAddress = emailAddress;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public UserRole getUserRole() {

@@ -16,9 +16,13 @@ public final class BorrowDAO {
     @OneToOne(targetEntity = BookDAO.class)
     private BookDAO book;
 
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "borrowed_user_id")
     @ManyToOne(targetEntity = UserDAO.class)
     private UserDAO userBorrowed;
+
+    @JoinColumn(name = "booked_user_id")
+    @ManyToOne(targetEntity = UserDAO.class)
+    private UserDAO userBooked;
 
     @Column(name = "return_date")
     @Temporal(TemporalType.DATE)
@@ -52,6 +56,14 @@ public final class BorrowDAO {
 
     public void setUserBorrowed(UserDAO userBorrowed) {
         this.userBorrowed = userBorrowed;
+    }
+
+    public UserDAO getUserBooked() {
+        return userBooked;
+    }
+
+    public void setUserBooked(UserDAO userBooked) {
+        this.userBooked = userBooked;
     }
 
     public Date getReturnDate() {

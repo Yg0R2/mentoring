@@ -12,6 +12,8 @@ public interface UserRepository extends CrudRepository<UserDAO, Long> {
     @Override
     List<UserDAO> findAll();
 
+    UserDAO findByEmailAddress(String emailAddress);
+
     UserDAO findById(long id);
 
 }

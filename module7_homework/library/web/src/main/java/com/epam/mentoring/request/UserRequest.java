@@ -11,6 +11,7 @@ public final class UserRequest implements Serializable {
     private String firstName;
     private String lastName;
     private String emailAddress;
+    private String password;
     private UserRole userRole;
 
     public UserRequest() {
@@ -54,6 +55,14 @@ public final class UserRequest implements Serializable {
 
     public void setEmailAddress(String emailAddress) {
         this.emailAddress = emailAddress;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public UserRole getUserRole() {

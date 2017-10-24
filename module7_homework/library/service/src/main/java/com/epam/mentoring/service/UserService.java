@@ -32,6 +32,16 @@ public class UserService {
         }
     }
 
+    public UserDAO getUserByEmailAddress(String emailAddress) {
+        UserDAO user = userRepository.findByEmailAddress(emailAddress);
+
+        if (user == null) {
+            throw new NoSuchEntryException("User doesn't exist with the requested email address=" + emailAddress);
+        }
+
+        return user;
+    }
+
     public UserDAO getUserById(long id) {
         UserDAO user = userRepository.findById(id);
 

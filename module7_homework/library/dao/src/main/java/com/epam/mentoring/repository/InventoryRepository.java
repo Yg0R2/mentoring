@@ -12,6 +12,8 @@ public interface InventoryRepository extends CrudRepository<InventoryDAO, Long> 
     @Override
     List<InventoryDAO> findAll();
 
+    InventoryDAO findByBook_Id(long bookId);
+
     InventoryDAO findById(long id);
 
 }

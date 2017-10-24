@@ -1,6 +1,8 @@
 package com.epam.mentoring.domain;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -35,6 +37,7 @@ public final class AuthorDAO implements Serializable {
 
     @JsonBackReference
     @ManyToMany(cascade = CascadeType.MERGE, mappedBy = "authors")
+    @LazyCollection(LazyCollectionOption.FALSE)
     private List<BookDAO> books;
 
     public AuthorDAO() {

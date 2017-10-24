@@ -1,12 +1,22 @@
+<#-- @ftlroot "../.." -->
 <#import "/spring.ftl" as spring>
+<#import "/ftl/book/book_macro.ftl" as bookMacro>
 
-<#macro displayAuthor author>
+<#macro displayAuthor author, displayBooks=true>
     <fieldset name="author" class="author">
         <legend>${author.getFirstName()}, ${author.getLastName()}</legend>
 
-        <span>
+        <div>
             Author additional data. // TODO: Add more author data
-        </span>
+        </div>
+
+        <#if displayBooks>
+            <legend>Books:</legend>
+
+            <#list author.getBooks()![] as book>
+                <@bookMacro.displayBook book, false />
+            </#list>
+        </#if>
     </fieldset>
 </#macro>
 
